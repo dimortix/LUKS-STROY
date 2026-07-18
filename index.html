@@ -8,19 +8,20 @@
 <meta property="og:title" content="ЛЮКС-СТРОЙ — фасадный подрядчик">
 <meta property="og:description" content="Фасады под ключ для гражданских и промышленных объектов. Проекты с участием команды — более чем на 1 млрд ₽. Член СРО.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --paper: #f4f2ec;
-    --ink: #000;
-    --muted: #8b8378;
-    --accent: #c65a1e;
-    --accent-2: #e0a32e;
-    --steel: #26313b;
-    --grid: rgba(22, 22, 19, .07);
-    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    /* бумажные волокна + пятна + зерно — ложится поверх видео умножением */
-    --paper-tex:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='4' seed='11'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.5 0 0 0 0 0.47 0 0 0 0 0.4 0 0 0 0.3 0'/%3E%3C/filter%3E%3Cfilter id='f'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.14' numOctaves='5' seed='7'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0.28 0'/%3E%3C/filter%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='2' seed='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.4 0 0 0 0 0.38 0 0 0 0 0.33 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23m)'/%3E%3Crect width='600' height='600' filter='url(%23f)'/%3E%3Crect width='600' height='600' filter='url(%23g)'/%3E%3C/svg%3E");
+    /* палитра: светлый бетон + графит + строительный оранжевый */
+    --paper: #f4f5f6;
+    --ink: #14181c;
+    --muted: #7b8288;
+    --accent: #e8620a;
+    --accent-2: #f2a20f;
+    --steel: #1f2933;
+    --sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+    --head: 'Oswald', 'Arial Narrow', sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: auto; }
@@ -33,56 +34,16 @@
     overflow-x: hidden;
   }
 
-  /* миллиметровка — один сквозной слой поверх всего сайта, включая видео */
-  .gridlay {
-    position: fixed; inset: 0; z-index: 94;
-    pointer-events: none;
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 56px 56px;
-    mix-blend-mode: multiply;
-  }
-
-  /* Настоящая бумага (скан 4K) поверх ВСЕГО, включая текст.
-     Слой 1: умножение — фактура и вкрапления на светлом. */
-  body::before {
-    content: ''; position: fixed; inset: 0; z-index: 95;
-    pointer-events: none;
-    background: url('textures/paper.jpg');
-    background-size: 1100px auto;
-    mix-blend-mode: multiply;
-    opacity: .60;
-    filter: contrast(1.15) brightness(1.07);
-  }
-  /* Слой 2: screen — бумага проступает сквозь тёмный текст, эффект принта */
-  .paperlite {
-    position: fixed; inset: 0; z-index: 96;
-    pointer-events: none;
-    background: url('textures/paper.jpg');
-    background-size: 1100px auto;
-    mix-blend-mode: screen;
-    opacity: .14;
-    filter: contrast(1.4);
-  }
-  /* Слой 3: плёночное зерно */
+  /* лёгкая фактура бетона поверх фона — едва заметное зерно */
   body::after {
     content: ''; position: fixed; inset: -50%; z-index: 97;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-    opacity: .18;
+    opacity: .07;
     mix-blend-mode: multiply;
   }
 
-  /* бумажная текстура поверх изображения (эффект «напечатано на бумаге») */
   .tex { position: relative; }
-  .tex::after {
-    content: ''; position: absolute; inset: 0; z-index: 3;
-    pointer-events: none;
-    background: rgba(238, 232, 218, .35) var(--paper-tex);
-    background-size: 600px 600px;
-    mix-blend-mode: multiply;
-  }
 
   .caps {
     font-size: 10px; letter-spacing: .28em; text-transform: uppercase;
@@ -99,7 +60,6 @@
     display: flex; align-items: center; gap: 10px;
   }
   .sechead .num::before { content: ''; width: 10px; height: 10px; background: var(--accent); }
-  .sechead .arrow { font-size: 22px; }
 
   /* ---------- Индикатор загрузки кадров (в стиле разметки) ---------- */
   .loadtag {
@@ -149,13 +109,8 @@
     padding: 8px 12px;
     font-size: 10px; letter-spacing: .28em; text-transform: uppercase;
     line-height: 1.7;
-    box-shadow: 8px 8px 0 rgba(22,22,19,.06);
+    box-shadow: 0 10px 26px rgba(20,24,28,.10);
   }
-  header .sw { display: inline-flex; gap: 3px; vertical-align: middle; margin-left: 10px; }
-  header .sw i { width: 9px; height: 9px; display: block; }
-  header .sw i:nth-child(1) { background: var(--ink); }
-  header .sw i:nth-child(2) { background: var(--accent); }
-  header .sw i:nth-child(3) { background: var(--accent-2); }
 
   /* ---------- Сцена ---------- */
   .stage { height: 1400vh; position: relative; }
@@ -163,7 +118,7 @@
   #film {
     position: absolute; inset: 0;
     width: 100%; height: 100%; display: block;
-    filter: saturate(.72) contrast(.94) sepia(.14) brightness(1.06);
+    filter: saturate(.85) contrast(.98) brightness(1.02);
   }
   /* ---------- Hero: журнальный разворот ---------- */
   .hero {
@@ -184,18 +139,10 @@
     width: 100%;
     display: flex; justify-content: space-between; align-items: center;
   }
-  .ppanel.top .left .caps { color: var(--muted); }
-  .ppanel.top .left .y { font-size: 24px; margin: 5px 0; }
-  .ppanel.top .mid {
-    font-size: 22px;
-  }
-  .ppanel.top .right { text-align: right; display: flex; align-items: center; gap: 14px; }
-  .ppanel.top .sw { display: inline-flex; gap: 4px; }
-  .ppanel.top .sw i { width: 14px; height: 14px; display: block; }
-  .ppanel.top .sw i:nth-child(1) { background: var(--ink); margin-top: -7px; }
-  .ppanel.top .sw i:nth-child(2) { background: var(--accent); }
-  .ppanel.top .sw i:nth-child(3) { background: var(--accent-2); margin-top: 7px; }
-  .ppanel.top .right .caps { color: var(--muted); display: block; text-align: left; }
+  .ppanel.top .left .caps { color: var(--muted); display: block; }
+  .ppanel.top .left .caps + .caps { margin-top: 8px; }
+  .ppanel.top .right { text-align: right; }
+  .ppanel.top .right .caps { color: var(--muted); display: block; text-align: right; }
 
   .window { flex: 1; }
 
@@ -208,27 +155,21 @@
     align-items: start;
   }
   .ppanel.bot h1 {
-    font-size: clamp(40px, 6.2vw, 104px);
-    font-weight: 300; line-height: 1.0; letter-spacing: -.035em;
-    color: #000;
+    font-family: var(--head);
+    font-size: clamp(40px, 6vw, 96px);
+    font-weight: 600; line-height: 1.0; letter-spacing: .01em;
+    text-transform: uppercase;
+    color: var(--ink);
     white-space: nowrap;
   }
-  .ppanel.bot h1 b { font-weight: 700; }
+  .ppanel.bot h1 b { font-weight: 600; color: var(--accent); }
   .ppanel.bot .right { max-width: 460px; justify-self: end; }
-  .ppanel.bot .nrow { display: flex; gap: 14px; align-items: baseline; margin-bottom: 4px; }
-  .ppanel.bot .nrow .n { font-size: 22px; min-width: 68px; }
-  .ppanel.bot .nrow .d { font-size: 11px; color: rgba(22,22,19,.7); }
-  .ppanel.bot p.lead {
-    margin-top: 10px; font-size: 12px; line-height: 1.65; text-align: justify;
-    color: rgba(22,22,19,.75);
+  .ppanel.bot .nrow { display: flex; gap: 20px; align-items: center; margin-bottom: 16px; }
+  .ppanel.bot .nrow .n {
+    font-size: 40px; min-width: 110px;
+    font-family: var(--head); font-weight: 600; line-height: 1;
   }
-  /* уголки по краям видео-окна */
-  .ppanel .wmark { position: absolute; font-size: 22px; opacity: .8; }
-  .ppanel.top .wmark { bottom: -34px; }
-  .ppanel.bot .wmark { top: -36px; }
-  .ppanel .wmark.l { left: 6vw; }
-  .ppanel .wmark.r { right: 6vw; }
-
+  .ppanel.bot .nrow .d { font-size: 12px; line-height: 1.55; color: rgba(22,22,19,.72); max-width: 320px; }
   .scroll-hint {
     position: absolute; right: 6vw; bottom: 22px;
     font-size: 10px; letter-spacing: .4em; text-transform: uppercase;
@@ -254,29 +195,27 @@
       93% 82%, 93% 100%, 8% 100%, 8% 93%, 0 93%
     );
   }
-  .cap .num {
+  .cap .num, .modal-box .num {
     font-size: 12px; letter-spacing: .34em; text-transform: uppercase;
     color: var(--accent); font-weight: 700;
     display: flex; align-items: center; gap: 12px;
   }
-  .cap .num::before { content: ''; width: 12px; height: 12px; background: var(--accent); }
+  .cap .num::before, .modal-box .num::before { content: ''; width: 12px; height: 12px; background: var(--accent); }
   .cap h2 {
-    font-size: clamp(44px, 4.8vw, 72px);
-    font-weight: 700; line-height: 1.0; letter-spacing: -.025em;
+    font-family: var(--head);
+    font-size: clamp(36px, 4vw, 60px);
+    font-weight: 600; line-height: 1.02; letter-spacing: .01em;
+    text-transform: uppercase;
     margin: 20px 0 18px;
   }
   .cap p {
-    font-size: 16px; line-height: 1.7;
-    color: rgba(22,22,19,.78);
-    text-align: justify;
-  }
-  .cap .arrow {
-    position: absolute; top: 34px; right: 48px;
-    font-size: 28px;
+    font-size: 15px; line-height: 1.7;
+    color: rgba(20,24,28,.78);
   }
   #cap1 { left: 6vw; bottom: 11vh; }
   #cap2 { right: 6vw; bottom: 13vh; }
   #cap3 { left: 6vw; bottom: 11vh; }
+  #cap4 { right: 6vw; bottom: 13vh; }
 
   /* ---------- Секции после полёта ---------- */
   section { position: relative; }
@@ -287,16 +226,20 @@
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px 36px;
   }
   .archive figure {
-    background: var(--paper);
+    background: #fff;
     padding: 12px 12px 14px;
-    box-shadow: 10px 10px 0 rgba(22,22,19,.07);
+    box-shadow: 0 14px 34px rgba(20,24,28,.10);
+    cursor: pointer;
+    transition: transform .35s ease, box-shadow .35s ease;
   }
-  .archive figure:nth-child(odd) { transform: rotate(-.7deg); }
-  .archive figure:nth-child(even) { transform: rotate(.6deg) translateY(18px); }
+  .archive figure:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 44px rgba(20,24,28,.16);
+  }
   .archive figure .ph { overflow: hidden; }
   .archive img {
     width: 100%; display: block;
-    filter: saturate(.72) contrast(.94) sepia(.14) brightness(1.06);
+    filter: saturate(.85) contrast(.98) brightness(1.02);
   }
   .archive figcaption {
     display: flex; justify-content: space-between;
@@ -313,10 +256,30 @@
   /* Цифры и Направления — одна сетка */
   .facts { padding: 120px 8vw 130px; }
   .dirs { padding-bottom: 30px; }
+  .facts.dirs .grid { grid-template-columns: repeat(3, 1fr); }
   .dirs .t {
-    font-size: clamp(22px, 2.2vw, 30px);
-    font-weight: 700; letter-spacing: -.01em; line-height: 1.1;
+    font-family: var(--head);
+    font-size: clamp(20px, 2vw, 28px);
+    font-weight: 500; letter-spacing: .02em; line-height: 1.15;
+    text-transform: uppercase;
   }
+  .dirs .feats { list-style: none; margin-top: 14px; }
+  .dirs .feats li {
+    font-size: 12px; line-height: 1.9;
+    color: rgba(22,22,19,.7);
+  }
+  .dirs .feats li::before { content: '—\00a0\00a0'; color: var(--accent); }
+
+  /* Цифры: пять показателей всегда в одну строку */
+  .facts.stats .grid { grid-template-columns: repeat(5, 1fr); }
+
+  /* Направления: сетка во всю ширину экрана */
+  .dirs { padding-left: 0; padding-right: 0; }
+  .dirs .sechead { margin-left: 8vw; margin-right: 8vw; }
+  .dirs .cell { padding: 34px 2.5vw 46px; }
+  .dirs .cell + .cell { padding-left: 2.5vw; }
+  .dirs .cell:first-child { padding-left: 8vw; }
+  .dirs .cell:last-child { padding-right: 8vw; }
   .facts .grid {
     display: grid; grid-template-columns: repeat(4, 1fr);
     border-top: 1px solid rgba(22,22,19,.25);
@@ -327,21 +290,12 @@
   }
   .facts .cell + .cell { border-left: 1px solid rgba(22,22,19,.15); padding-left: 26px; }
   .facts .n {
-    font-size: clamp(44px, 5vw, 72px);
-    font-weight: 300; letter-spacing: -.03em; line-height: 1;
+    font-family: var(--head);
+    font-size: clamp(40px, 4.6vw, 66px);
+    font-weight: 500; letter-spacing: 0; line-height: 1;
   }
-  .facts .n small { font-size: .38em; letter-spacing: 0; vertical-align: .5em; color: var(--accent); font-weight: 700; }
+  .facts .n small { font-family: var(--sans); font-size: .34em; letter-spacing: .04em; vertical-align: .55em; color: var(--accent); font-weight: 700; }
   .facts .d { margin-top: 14px; font-size: 12px; line-height: 1.6; color: rgba(22,22,19,.7); max-width: 210px; }
-  .facts .coords {
-    margin-top: 90px;
-    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 20px;
-  }
-  .facts .coords .big {
-    font-size: clamp(26px, 3.4vw, 48px);
-    font-weight: 300; letter-spacing: .04em;
-  }
-  .facts .coords .big b { font-weight: 700; }
-  .facts .coords .side { max-width: 320px; font-size: 12px; line-height: 1.7; color: rgba(22,22,19,.7); }
 
   /* ---------- Заявка ---------- */
   .outro {
@@ -355,11 +309,13 @@
     position: relative; z-index: 2;
   }
   .outro h2 {
-    font-size: clamp(46px, 6.4vw, 86px);
-    font-weight: 300; line-height: 1.04; letter-spacing: -.03em;
-    color: #000;
+    font-family: var(--head);
+    font-size: clamp(42px, 5.6vw, 78px);
+    font-weight: 500; line-height: 1.06; letter-spacing: .01em;
+    text-transform: uppercase;
+    color: var(--ink);
   }
-  .outro h2 b { font-weight: 700; }
+  .outro h2 b { font-weight: 600; color: var(--accent); }
   .outro .badge {
     display: inline-block; margin-top: 34px;
     background: var(--steel); color: var(--paper);
@@ -379,14 +335,94 @@
     max-width: 380px;
     margin-bottom: 22px;
   }
-  .outro a.cta {
+  a.cta {
     display: inline-block; margin-top: 10px;
     background: var(--ink); color: var(--paper);
     padding: 16px 34px; text-decoration: none;
     font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
     transition: background .3s;
   }
-  .outro a.cta:hover { background: var(--steel); }
+  a.cta:hover { background: var(--steel); }
+
+  /* кнопка расчёта на первом экране — в бумажной панели, видео не перекрывает */
+  .hero .cta { margin-top: 20px; padding: 13px 26px; pointer-events: auto; }
+
+  /* ---------- Окно «Обсудить проект» ---------- */
+  .modal {
+    position: fixed; inset: 0; z-index: 120;
+    display: none; align-items: center; justify-content: center;
+  }
+  .modal.open { display: flex; }
+  .modal .veil { position: absolute; inset: 0; background: rgba(22,22,19,.45); }
+  .modal-box {
+    position: relative; background: var(--paper);
+    padding: 44px 48px 42px; max-width: 480px; margin: 20px;
+    box-shadow: 0 30px 70px rgba(15,18,22,.35);
+  }
+  .modal-box h3 {
+    font-family: var(--head);
+    font-size: clamp(28px, 3.2vw, 40px);
+    font-weight: 600; line-height: 1.0; letter-spacing: .01em;
+    text-transform: uppercase;
+    margin: 18px 0 14px;
+  }
+  /* карточка объекта */
+  .modal-box.obj {
+    max-width: 880px; width: min(880px, calc(100vw - 32px));
+    max-height: 88vh; overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .objgrid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    margin: 24px 0 22px;
+  }
+  .objgrid img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: saturate(.85) contrast(.98) brightness(1.02);
+  }
+  .objgrid img:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 7; }
+  .objgrid img { cursor: zoom-in; }
+  .objmeta {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: rgba(20,24,28,.14);
+    border: 1px solid rgba(20,24,28,.14);
+  }
+  .objmeta > div { background: #fff; padding: 16px 18px 18px; }
+  .objmeta .k { font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+  .objmeta .v { margin-top: 7px; font-size: 15px; font-weight: 600; }
+  .objnote { margin-top: 20px; color: var(--muted); }
+
+  /* ---------- Лайтбокс: просмотр фото объекта по одному ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 130;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(15,18,22,.93);
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 88vw; max-height: 84vh; display: block;
+    box-shadow: 0 30px 80px rgba(0,0,0,.5);
+  }
+  .lightbox button {
+    position: absolute; background: none; border: 0; cursor: pointer;
+    color: #eceef0; font-family: var(--sans);
+  }
+  .lb-close { top: 22px; right: 30px; font-size: 22px; }
+  .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 30px; padding: 18px; }
+  .lb-prev { left: 10px; }
+  .lb-next { right: 10px; }
+  .modal-box p { font-size: 14px; line-height: 1.7; color: rgba(22,22,19,.78); }
+  .modal-box .phone {
+    display: block; margin: 20px 0 2px;
+    font-size: clamp(24px, 3vw, 34px); font-weight: 300; letter-spacing: .02em;
+    color: var(--ink); text-decoration: none;
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 40px;
+    background: none; border: 0; cursor: pointer;
+    font-size: 18px; color: var(--muted);
+    font-family: var(--sans);
+  }
   .outro .wm {
     position: absolute; right: -2vw; bottom: -6vw; z-index: 1;
     font-size: clamp(180px, 30vw, 420px);
@@ -419,6 +455,19 @@
     .facts .grid { grid-template-columns: 1fr 1fr; }
     .facts .cell + .cell { border-left: none; padding-left: 0; }
     .facts .cell:nth-child(even) { border-left: 1px solid rgba(22,22,19,.15); padding-left: 20px; }
+    /* цифры: одна строка и на мобильных */
+    .facts.stats .grid { grid-template-columns: repeat(5, 1fr); }
+    .stats .cell { padding: 16px 6px 20px 0; }
+    .stats .cell + .cell { border-left: 1px solid rgba(20,24,28,.15); padding-left: 8px; }
+    .stats .cell:nth-child(even) { padding-left: 8px; }
+    .stats .n { font-size: 21px; }
+    .stats .d { font-size: 9px; line-height: 1.5; }
+    /* направления: одна колонка во всю ширину */
+    .dirs { padding-left: 0; padding-right: 0; }
+    .dirs .sechead { margin-left: 6vw; margin-right: 6vw; }
+    .facts.dirs .grid { grid-template-columns: 1fr; }
+    .dirs .cell, .dirs .cell:first-child, .dirs .cell:last-child { padding: 24px 6vw 30px; border-left: none; }
+    .objmeta { grid-template-columns: 1fr; }
     .sndbox { left: 16px; }
     .outro { padding: 110px 6vw 50px; }
     .outro .cols { grid-template-columns: 1fr; gap: 44px; }
@@ -427,12 +476,9 @@
 </head>
 <body>
 
-<div class="gridlay"></div>
-<div class="paperlite"></div>
-
 <header id="topbar">
-  <span class="chip">Люкс-Строй<br>Facade contractor</span>
-  <span class="chip">50°36′ N · 36°35′ E <span class="sw"><i></i><i></i><i></i></span></span>
+  <span class="chip">ЛЮКС-СТРОЙ<br>Фасадный подрядчик</span>
+  <span class="chip">Белгород · ЦФО · Россия</span>
 </header>
 
 <div class="stage" id="stage">
@@ -445,33 +491,26 @@
       <div class="ppanel top" id="pTop">
         <div class="row">
           <div class="left">
-            <span class="caps">Facade contractor</span>
-            <div class="y">2K26</div>
-            <span class="caps">Civil&nbsp;&nbsp;·&nbsp;&nbsp;industrial</span>
+            <span class="caps">Фасадный подрядчик</span>
+            <span class="caps">Гражданские и промышленные объекты</span>
           </div>
-          <div class="mid">←</div>
           <div class="right">
-            <span class="sw"><i></i><i></i><i></i></span>
-            <span class="caps">Object<br>report</span>
+            <span class="caps">Фасады под ключ<br>Отделка МОП</span>
           </div>
         </div>
-        <span class="wmark l">⌐</span>
-        <span class="wmark r" style="transform: scaleX(-1);">⌐</span>
       </div>
 
       <div class="window"></div>
 
       <div class="ppanel bot" id="pBot">
-        <span class="wmark l" style="transform: scale(-1);">⌐</span>
-        <span class="wmark r" style="transform: scaleY(-1);">⌐</span>
         <div class="cols">
           <div>
-            <h1>люкс-<b>строй</b>&nbsp;.</h1>
+            <h1>люкс-<b>строй</b></h1>
+            <a class="cta" data-open-modal data-phone-link href="#">Запросить расчёт</a>
           </div>
           <div class="right">
             <div class="nrow"><span class="n">15+</span><span class="d">лет опыта команды в гражданском и промышленном строительстве</span></div>
             <div class="nrow"><span class="n">1+</span><span class="d">млрд рублей — совокупная стоимость проектов с участием специалистов</span></div>
-            <p class="lead">Специализированный фасадный подрядчик: навесные вентилируемые фасады, керамогранит, металлокассеты, композит, клинкер и штукатурные системы. Белгород · ЦФО · Московская область; крупные проекты — по всей России.</p>
           </div>
         </div>
         <div class="scroll-hint">Листайте <b>↓</b></div>
@@ -479,89 +518,118 @@
     </div>
 
     <div class="cap" id="cap1">
-      <div class="num">01 — Объект</div>
-      <span class="arrow">↗</span>
-      <h2>выход на объект&nbsp;.</h2>
-      <p>Приёмка строительного фронта, входной контроль документации и материалов, геодезия и разметка. Каждый этап фиксируем в журнале и фотоотчёте — это основа исполнительной документации.</p>
+      <div class="num">01 — Смета и договор</div>
+      <h2>прозрачный старт</h2>
+      <p>Изучаем документацию, считаем объёмы и фиксируем стоимость, сроки и график производства работ в договоре. Коммерческое предложение — в течение недели после получения комплекта.</p>
     </div>
 
     <div class="cap" id="cap2">
-      <div class="num">02 — Подсистема</div>
-      <span class="arrow">↗</span>
-      <h2>каркас одевается&nbsp;.</h2>
-      <p>Кронштейны, направляющие, утеплитель и ветрозащитные мембраны. Контроль монтажа креплений, противопожарных элементов и геометрии фасада — на каждой захватке.</p>
+      <div class="num">02 — Выход на объект</div>
+      <h2>мобилизация</h2>
+      <p>Принимаем строительный фронт, разворачиваем площадку и комплектуем проверенные бригады под график. Входной контроль материалов — до начала первого монтажа.</p>
     </div>
 
     <div class="cap" id="cap3">
-      <div class="num">03 — Облицовка</div>
-      <span class="arrow">↗</span>
-      <h2>фасад под ключ&nbsp;.</h2>
-      <p>Керамогранит, металлокассеты, композитные и фиброцементные панели, клинкер. Примыкания, откосы, парапеты — и объект передаётся с полным комплектом исполнительной документации.</p>
+      <div class="num">03 — Работы на объекте</div>
+      <h2>монтаж и контроль</h2>
+      <p>Ведём работы по проекту с пооперационным контролем: крепления, утепление, геометрия, облицовка. Еженедельная отчётность заказчику по каждому этапу.</p>
+    </div>
+
+    <div class="cap" id="cap4">
+      <div class="num">04 — Сдача работ</div>
+      <h2>результат с гарантией</h2>
+      <p>Предъявляем выполненные объёмы, передаём исполнительную документацию и устраняем замечания. Гарантия на выполненные работы — по договору.</p>
     </div>
   </div>
 </div>
 
-<!-- ---------- Журнал объекта ---------- -->
+<!-- ---------- Объекты ---------- -->
 <section class="archive">
   <div class="sechead reveal">
-    <div class="num">04 — Журнал объекта</div>
-    <span class="arrow">↗</span>
+    <div class="num">01 — Объекты</div>
   </div>
   <div class="grid">
-    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0001.webp" alt="Строительная площадка, старт объекта" loading="lazy"></div><figcaption><span>кадр 0001</span><span>объект</span></figcaption></figure>
-    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0060.webp" alt="Подготовка строительного фронта" loading="lazy"></div><figcaption><span>кадр 0060</span><span>фронт работ</span></figcaption></figure>
-    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0096.webp" alt="Геодезия и разметка площадки" loading="lazy"></div><figcaption><span>кадр 0096</span><span>разметка</span></figcaption></figure>
-    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0170.webp" alt="Монтаж фасадной подсистемы на каркасе" loading="lazy"></div><figcaption><span>кадр 0170</span><span>подсистема</span></figcaption></figure>
-    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0217.webp" alt="Утепление и мембраны фасада" loading="lazy"></div><figcaption><span>кадр 0217</span><span>утепление</span></figcaption></figure>
-    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0339.webp" alt="Облицовка фасада, завершение объекта" loading="lazy"></div><figcaption><span>кадр 0339</span><span>облицовка</span></figcaption></figure>
+    <figure class="reveal" data-obj="0" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0001.webp" alt="Объект 01 — подготовка площадки" loading="lazy"></div><figcaption><span>объект 01</span><span>площадка</span></figcaption></figure>
+    <figure class="reveal" data-obj="1" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0060.webp" alt="Объект 02 — строительный фронт" loading="lazy"></div><figcaption><span>объект 02</span><span>фронт работ</span></figcaption></figure>
+    <figure class="reveal" data-obj="2" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0096.webp" alt="Объект 03 — геодезия и разметка" loading="lazy"></div><figcaption><span>объект 03</span><span>разметка</span></figcaption></figure>
+    <figure class="reveal" data-obj="3" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0170.webp" alt="Объект 04 — монтаж подсистемы" loading="lazy"></div><figcaption><span>объект 04</span><span>подсистема</span></figcaption></figure>
+    <figure class="reveal" data-obj="4" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0217.webp" alt="Объект 05 — утепление фасада" loading="lazy"></div><figcaption><span>объект 05</span><span>утепление</span></figcaption></figure>
+    <figure class="reveal" data-obj="5" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0339.webp" alt="Объект 06 — облицовка фасада" loading="lazy"></div><figcaption><span>объект 06</span><span>облицовка</span></figcaption></figure>
   </div>
   <div class="foot reveal">
-    <span>camera : фотофиксация хода работ, 2K26</span>
-    <span>журнал ведёт люкс-строй</span>
+    <span>нажмите на объект, чтобы узнать подробности</span>
   </div>
 </section>
 
 <!-- ---------- Направления ---------- -->
 <section class="facts dirs">
   <div class="sechead reveal">
-    <div class="num">05 — Направления</div>
-    <span class="arrow">↗</span>
+    <div class="num">02 — Направления</div>
   </div>
   <div class="grid">
-    <div class="cell reveal"><div class="t">Вентфасады</div><div class="d">навесные системы под ключ: подсистема, утеплитель, мембраны, облицовка</div></div>
-    <div class="cell reveal"><div class="t">Облицовка</div><div class="d">керамогранит, металлокассеты, композитные и фиброцементные панели, клинкер</div></div>
-    <div class="cell reveal"><div class="t">Штукатурные фасады</div><div class="d">утепление, армирование, декоративные слои; ремонт и восстановление фасадов</div></div>
-    <div class="cell reveal"><div class="t">Отделка МОП</div><div class="d">штукатурка, шпаклевание, окраска, комплексная отделка мест общего пользования</div></div>
+    <div class="cell reveal">
+      <div class="t">Вентилируемые фасады</div>
+      <ul class="feats">
+        <li>фасадные подсистемы</li>
+        <li>утеплитель и мембраны</li>
+        <li>металлокассеты</li>
+        <li>керамогранит</li>
+        <li>композитные панели</li>
+        <li>фиброцементные панели</li>
+        <li>клинкерные фасады</li>
+        <li>откосы, отливы, примыкания</li>
+        <li>парапеты и доборные элементы</li>
+      </ul>
+    </div>
+    <div class="cell reveal">
+      <div class="t">Невентилируемые фасады</div>
+      <ul class="feats">
+        <li>мокрые (штукатурные) фасады</li>
+        <li>утепление</li>
+        <li>армирование</li>
+        <li>нанесение декоративного слоя</li>
+        <li>окраска</li>
+        <li>ремонт фасадов</li>
+        <li>восстановление фасадов</li>
+      </ul>
+    </div>
+    <div class="cell reveal">
+      <div class="t">Отделка МОП</div>
+      <ul class="feats">
+        <li>штукатурные работы</li>
+        <li>шпаклевание</li>
+        <li>окраска</li>
+        <li>плиточные работы</li>
+        <li>устройство стяжки и полов</li>
+        <li>отделка потолков</li>
+        <li>комплексная отделка МОП</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <!-- ---------- Цифры ---------- -->
-<section class="facts">
+<section class="facts stats">
   <div class="sechead reveal">
-    <div class="num">06 — Цифры</div>
-    <span class="arrow">↗</span>
+    <div class="num">03 — Цифры</div>
   </div>
   <div class="grid">
     <div class="cell reveal"><div class="n">15+<small>ЛЕТ</small></div><div class="d">опыт команды в гражданском и промышленном строительстве</div></div>
     <div class="cell reveal"><div class="n">1+<small>МЛРД ₽</small></div><div class="d">совокупная стоимость проектов с участием специалистов компании</div></div>
-    <div class="cell reveal"><div class="n">6<small>ОБЪЕКТОВ</small></div><div class="d">компания готова вести параллельно, контракты от 5 до 100 млн ₽</div></div>
-    <div class="cell reveal"><div class="n">7<small>ДНЕЙ</small></div><div class="d">на коммерческое предложение после получения комплекта документации</div></div>
-  </div>
-  <div class="coords reveal">
-    <div class="big">50°36′ N <b>—</b> 36°35′ E</div>
-    <div class="side">База — Белгородская область; работаем по ЦФО и Московской области, готовы к крупным проектам по всей России. Специалист выезжает на объект для осмотра и уточнения условий производства работ.</div>
+    <div class="cell reveal"><div class="n">100+<small>ОБЪЕКТОВ</small></div><div class="d">реализовано с участием специалистов компании</div></div>
+    <div class="cell reveal"><div class="n">от 5<small>МЛН ₽</small></div><div class="d">минимальная стоимость рассматриваемого проекта</div></div>
+    <div class="cell reveal"><div class="n">7<small>ДНЕЙ</small></div><div class="d">на подготовку коммерческого предложения после получения полного комплекта документации</div></div>
   </div>
 </section>
 
 <!-- ---------- Заявка ---------- -->
 <section class="outro">
   <div class="sechead reveal">
-    <div class="num">07 — Заявка</div>
-    <span class="arrow">↗</span>
+    <div class="num">04 — Заявка</div>
   </div>
   <div class="cols">
     <div class="reveal">
-      <h2>фасад,<br>который можно<br><b>доверить</b>&nbsp;.</h2>
+      <h2>фасад,<br>который можно<br><b>доверить</b></h2>
       <span class="badge">расчёт — бесплатно</span>
       <p class="founder">«В строительстве репутация создаётся не обещаниями, а выполненными обязательствами. Мы стремимся стать подрядчиком, которому можно передать сложный участок работ — и быть уверенным, что компания доведёт его до результата.»</p>
       <p class="founder-sign caps">Заречный Сергей Вадимович — основатель и исполнительный директор</p>
@@ -569,17 +637,48 @@
     <div class="right reveal">
       <p>Пришлите проектную документацию, узлы и ведомость объёмов — подготовим коммерческое предложение в течение недели. Предварительный расчёт бесплатный, специалист выезжает на объект для осмотра и уточнения условий.</p>
       <p class="caps" style="color: var(--muted); text-align: left;">Член СРО · гарантия на выполненные работы по договору</p>
-      <!-- TODO: заменить на реальные контакты компании -->
-      <a class="cta" href="tel:+79000000000">Запросить расчёт</a>
+      <a class="cta" data-open-modal data-phone-link href="#">Запросить расчёт</a>
     </div>
   </div>
   <div class="wm">15</div>
   <div class="footrow">
-    <span>coords : 50°36′ N · 36°35′ E</span>
-    <span>ООО «ЛЮКС-СТРОЙ» · Фасадные работы</span>
+    <span>фасадные работы · отделка МОП</span>
+    <span>ООО «ЛЮКС-СТРОЙ»</span>
     <span>Белгород · ЦФО · Московская область</span>
   </div>
 </section>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Обсудить проект">
+  <div class="veil"></div>
+  <div class="modal-box">
+    <button class="modal-close caps" aria-label="Закрыть">✕</button>
+    <div class="num">Заявка</div>
+    <h3>обсудить проект</h3>
+    <p>Позвоните нам, чтобы обсудить объект и получить предварительный расчёт стоимости работ.</p>
+    <span class="caps" style="color: var(--muted);">Телефон</span>
+    <a class="phone" data-phone data-phone-link href="#"></a>
+    <a class="cta" data-phone-link href="#">Позвонить</a>
+  </div>
+</div>
+
+<div class="modal" id="objModal" role="dialog" aria-modal="true" aria-label="Объект">
+  <div class="veil"></div>
+  <div class="modal-box obj" data-lenis-prevent>
+    <button class="modal-close caps" aria-label="Закрыть">✕</button>
+    <div class="num" id="objNum"></div>
+    <h3 id="objTitle"></h3>
+    <div class="objgrid" id="objGrid"></div>
+    <div class="objmeta" id="objMeta"></div>
+    <p class="caps objnote">Подробная информация по объекту — по запросу</p>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+  <button class="lb-close" aria-label="Закрыть">✕</button>
+  <button class="lb-prev" aria-label="Предыдущее фото">←</button>
+  <img id="lbImg" src="" alt="Фото объекта">
+  <button class="lb-next" aria-label="Следующее фото">→</button>
+</div>
 
 <div class="sndbox">
   <button class="sndbtn caps" id="sndbtn">звук · выкл</button>
@@ -591,6 +690,93 @@
 <script src="js/lenis.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
+
+// ===== ТЕЛЕФОН КОМПАНИИ: заменить в одном месте — подставится везде =====
+const PHONE = '+7 (000) 000-00-00';
+const PHONE_TEL = 'tel:' + PHONE.replace(/[^\d+]/g, '');
+document.querySelectorAll('[data-phone]').forEach(el => el.textContent = PHONE);
+document.querySelectorAll('[data-phone-link]').forEach(el => el.href = PHONE_TEL);
+
+// ---------- Модальные окна: «Обсудить проект» и карточки объектов ----------
+// пока открыто окно — Lenis остановлен, колесо крутит контент окна, а не страницу под ним
+let scrollReady = false; // true после прелоада кадров (до него скролл и так заблокирован)
+function syncScrollLock() {
+  const locked = document.querySelector('.modal.open') || document.getElementById('lightbox').classList.contains('open');
+  if (locked) lenis.stop(); else if (scrollReady) lenis.start();
+}
+function openModal(m) {
+  m.classList.add('open');
+  syncScrollLock();
+  gsap.fromTo(m.querySelector('.modal-box'), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: 'power2.out' });
+}
+function closeModals() {
+  document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+  syncScrollLock();
+}
+document.querySelectorAll('[data-open-modal]').forEach(el =>
+  el.addEventListener('click', e => { e.preventDefault(); openModal(document.getElementById('modal')); }));
+document.querySelectorAll('.modal .veil, .modal .modal-close').forEach(el =>
+  el.addEventListener('click', closeModals));
+
+// ---------- Лайтбокс: каждое фото объекта смотрится отдельно ----------
+const lightbox = document.getElementById('lightbox');
+const lb = { list: [], i: 0 };
+function lbShow() { document.getElementById('lbImg').src = lb.list[lb.i]; }
+function lbOpen(list, i) { lb.list = list; lb.i = i; lbShow(); lightbox.classList.add('open'); syncScrollLock(); }
+function lbClose() { lightbox.classList.remove('open'); syncScrollLock(); }
+function lbNav(d) { lb.i = (lb.i + d + lb.list.length) % lb.list.length; lbShow(); }
+document.getElementById('objGrid').addEventListener('click', e => {
+  const img = e.target.closest('img');
+  if (!img) return;
+  const imgs = [...document.querySelectorAll('#objGrid img')];
+  lbOpen(imgs.map(x => x.src), imgs.indexOf(img));
+});
+lightbox.querySelector('.lb-close').addEventListener('click', lbClose);
+lightbox.querySelector('.lb-prev').addEventListener('click', () => lbNav(-1));
+lightbox.querySelector('.lb-next').addEventListener('click', () => lbNav(1));
+lightbox.addEventListener('click', e => { if (e.target === lightbox) lbClose(); });
+
+document.addEventListener('keydown', e => {
+  if (lightbox.classList.contains('open')) {
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowLeft') lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+    return;
+  }
+  if (e.key === 'Escape') closeModals();
+});
+
+// ===== ДАННЫЕ ОБЪЕКТОВ: примеры-заглушки — заменить реальными объектами компании =====
+// frames — номера кадров (или подставьте пути к своим фото), meta — поля карточки
+const OBJECTS = [
+  { stage: 'подготовка площадки', frames: [1, 24, 48, 72, 96],
+    meta: { 'Место': 'г. Белгород', 'Работы': 'навесной вентилируемый фасад, керамогранит', 'Объём': '6 400 м²', 'Заказчик': 'девелоперская компания' } },
+  { stage: 'строительный фронт',  frames: [10, 40, 60, 80, 96],
+    meta: { 'Место': 'Белгородская область', 'Работы': 'фасад из металлокассет, откосы и парапеты', 'Объём': '4 200 м²', 'Заказчик': 'генеральный подрядчик' } },
+  { stage: 'геодезия и разметка', frames: [50, 70, 85, 96, 112],
+    meta: { 'Место': 'г. Старый Оскол', 'Работы': 'штукатурный фасад с утеплением', 'Объём': '8 100 м²', 'Заказчик': 'генеральный подрядчик' } },
+  { stage: 'монтаж подсистемы',   frames: [120, 150, 175, 200, 217],
+    meta: { 'Место': 'Московская область', 'Работы': 'вентфасад, композитные панели', 'Объём': '12 500 м²', 'Заказчик': 'девелоперская компания' } },
+  { stage: 'утепление фасада',    frames: [160, 185, 205, 217, 232],
+    meta: { 'Место': 'г. Москва', 'Работы': 'утепление, мембраны, облицовка керамогранитом', 'Объём': '9 300 м²', 'Заказчик': 'генеральный подрядчик' } },
+  { stage: 'облицовка фасада',    frames: [250, 280, 305, 325, 339],
+    meta: { 'Место': 'г. Белгород', 'Работы': 'клинкерный фасад, отделка МОП', 'Объём': '5 700 м²', 'Заказчик': 'промышленное предприятие' } }
+];
+
+document.querySelectorAll('[data-obj]').forEach(fig => {
+  const open = () => {
+    const o = OBJECTS[+fig.dataset.obj];
+    document.getElementById('objNum').textContent = 'Объект 0' + (+fig.dataset.obj + 1);
+    document.getElementById('objTitle').textContent = o.stage;
+    document.getElementById('objGrid').innerHTML =
+      o.frames.map(f => `<img src="frames/frame_${String(f).padStart(4, '0')}.webp" alt="Фото объекта" loading="lazy">`).join('');
+    document.getElementById('objMeta').innerHTML =
+      Object.entries(o.meta).map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
+    openModal(document.getElementById('objModal'));
+  };
+  fig.addEventListener('click', open);
+  fig.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+});
 
 // Плавный скролл как в cosmos-project: Lenis + синхронизация со ScrollTrigger
 const lenis = new Lenis();
@@ -720,7 +906,8 @@ gsap.set('#film', { yPercent: 5 });
 preload().then(() => {
   resize();
   window.addEventListener('resize', resize);
-  lenis.start();
+  scrollReady = true;
+  if (!document.querySelector('.modal.open')) lenis.start();
 
   gsap.to('#loadtag', { opacity: 0, duration: .5, onComplete: () => document.getElementById('loadtag').remove() });
   gsap.to('.scroll-hint', { opacity: 1, duration: .8 });
@@ -748,14 +935,15 @@ preload().then(() => {
 
   // — полёт 1 (начинается после полного раскрытия): общий план площадки;
   //   стартовый сдвиг кадра гасим в начале полёта — в движении он незаметен
-  tl.to('#film', { yPercent: 0, duration: .06, ease: 'power1.inOut' }, .06);
+  tl.to('#film', { yPercent: 0, duration: .05, ease: 'power1.inOut' }, .06);
 
   // полёты и плато: [конечный кадр, старт полёта, длит. полёта, вход плашки, длит. входа, уход плашки]
-  // последняя плашка остаётся до конца — ухода нет
+  // четыре этапа: смета → выход на объект → работы → сдача; последняя плашка остаётся
   [
-    [96,              .06, .165, .235, .045, .325], // площадка → стоп «объект»
-    [217,             .36, .215, .585, .045, .675], // каркас → стоп «подсистема»
-    [FRAME_COUNT - 1, .71, .215, .935, .05,  null]  // здание → стоп «облицовка»
+    [50,              .06, .11, .185, .04, .275], // даль площадки → «смета и договор»
+    [96,              .30, .10, .415, .04, .51 ], // площадка ближе → «выход на объект»
+    [217,             .55, .14, .705, .04, .82 ], // каркас в работе → «работы на объекте»
+    [FRAME_COUNT - 1, .85, .12, .955, .04, null]  // готовый фасад → «сдача работ»
   ].forEach(([frame, at, dur, capAt, capDur, outAt], i) => {
     tl.to(seq, { frame, snap: 'frame', duration: dur, onUpdate: render }, at);
     tl.fromTo('#cap' + (i + 1), { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: capDur, ease: 'power2.out' }, capAt);
