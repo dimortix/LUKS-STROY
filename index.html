@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЛЮКС-СТРОЙ — фасадные работы · гражданские и промышленные объекты</title>
+<meta name="description" content="Специализированный фасадный подрядчик: навесные вентилируемые фасады, керамогранит, металлокассеты, композит, клинкер, штукатурные системы. Команда более 15 лет в строительной отрасли. Белгород · ЦФО · вся Россия.">
+<meta property="og:title" content="ЛЮКС-СТРОЙ — фасадный подрядчик">
+<meta property="og:description" content="Фасады под ключ для гражданских и промышленных объектов. Проекты с участием команды — более чем на 1 млрд ₽. Член СРО.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🏗️%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --paper: #f4f2ec;
+    --ink: #000;
+    --muted: #8b8378;
+    --accent: #c65a1e;
+    --accent-2: #e0a32e;
+    --steel: #26313b;
+    --grid: rgba(22, 22, 19, .07);
+    --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* бумажные волокна + пятна + зерно — ложится поверх видео умножением */
+    --paper-tex:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='4' seed='11'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.5 0 0 0 0 0.47 0 0 0 0 0.4 0 0 0 0.3 0'/%3E%3C/filter%3E%3Cfilter id='f'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02 0.14' numOctaves='5' seed='7'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.45 0 0 0 0 0.42 0 0 0 0 0.36 0 0 0 0.28 0'/%3E%3C/filter%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.35' numOctaves='2' seed='3'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.4 0 0 0 0 0.38 0 0 0 0 0.33 0 0 0 0.18 0'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23m)'/%3E%3Crect width='600' height='600' filter='url(%23f)'/%3E%3Crect width='600' height='600' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    overflow-x: hidden;
+  }
+
+  /* миллиметровка — один сквозной слой поверх всего сайта, включая видео */
+  .gridlay {
+    position: fixed; inset: 0; z-index: 94;
+    pointer-events: none;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mix-blend-mode: multiply;
+  }
+
+  /* Настоящая бумага (скан 4K) поверх ВСЕГО, включая текст.
+     Слой 1: умножение — фактура и вкрапления на светлом. */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 95;
+    pointer-events: none;
+    background: url('textures/paper.jpg');
+    background-size: 1100px auto;
+    mix-blend-mode: multiply;
+    opacity: .60;
+    filter: contrast(1.15) brightness(1.07);
+  }
+  /* Слой 2: screen — бумага проступает сквозь тёмный текст, эффект принта */
+  .paperlite {
+    position: fixed; inset: 0; z-index: 96;
+    pointer-events: none;
+    background: url('textures/paper.jpg');
+    background-size: 1100px auto;
+    mix-blend-mode: screen;
+    opacity: .14;
+    filter: contrast(1.4);
+  }
+  /* Слой 3: плёночное зерно */
+  body::after {
+    content: ''; position: fixed; inset: -50%; z-index: 97;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+    opacity: .18;
+    mix-blend-mode: multiply;
+  }
+
+  /* бумажная текстура поверх изображения (эффект «напечатано на бумаге») */
+  .tex { position: relative; }
+  .tex::after {
+    content: ''; position: absolute; inset: 0; z-index: 3;
+    pointer-events: none;
+    background: rgba(238, 232, 218, .35) var(--paper-tex);
+    background-size: 600px 600px;
+    mix-blend-mode: multiply;
+  }
+
+  .caps {
+    font-size: 10px; letter-spacing: .28em; text-transform: uppercase;
+  }
+
+  /* заголовок секции — общий стандарт */
+  .sechead {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 54px;
+  }
+  .sechead .num {
+    font-size: 10px; letter-spacing: .34em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sechead .num::before { content: ''; width: 10px; height: 10px; background: var(--accent); }
+  .sechead .arrow { font-size: 22px; }
+
+  /* ---------- Индикатор загрузки кадров (в стиле разметки) ---------- */
+  .loadtag {
+    position: absolute; z-index: 12;
+    right: 6vw; bottom: calc(max(26vh, 220px) + 16px);
+    background: var(--paper);
+    padding: 7px 12px;
+    color: var(--muted);
+  }
+
+  /* ---------- Кнопка звука + громкость (в стиле разметки, «напечатано» под бумагой) ---------- */
+  .sndbox {
+    position: fixed; left: 6vw; bottom: 22px; z-index: 93;
+    display: flex; align-items: center; gap: 12px;
+    background: var(--paper);
+    padding: 7px 12px;
+  }
+  .sndbtn {
+    background: none; border: 0; cursor: pointer; padding: 0;
+    color: var(--muted);
+    font-family: var(--sans);
+  }
+  #sndvol {
+    -webkit-appearance: none; appearance: none;
+    width: 90px; height: 12px; margin: 0;
+    background: transparent; cursor: pointer;
+  }
+  #sndvol::-webkit-slider-runnable-track { height: 1px; background: rgba(22,22,19,.35); }
+  #sndvol::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px; height: 10px; margin-top: -4.5px;
+    background: var(--accent);
+  }
+  #sndvol::-moz-range-track { height: 1px; background: rgba(22,22,19,.35); }
+  #sndvol::-moz-range-thumb { width: 10px; height: 10px; border: 0; border-radius: 0; background: var(--accent); }
+
+  /* ---------- Шапка (появляется после раскрытия видео) ---------- */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 22px 28px;
+    pointer-events: none;
+    opacity: 0;
+  }
+  header .chip {
+    background: var(--paper);
+    padding: 8px 12px;
+    font-size: 10px; letter-spacing: .28em; text-transform: uppercase;
+    line-height: 1.7;
+    box-shadow: 8px 8px 0 rgba(22,22,19,.06);
+  }
+  header .sw { display: inline-flex; gap: 3px; vertical-align: middle; margin-left: 10px; }
+  header .sw i { width: 9px; height: 9px; display: block; }
+  header .sw i:nth-child(1) { background: var(--ink); }
+  header .sw i:nth-child(2) { background: var(--accent); }
+  header .sw i:nth-child(3) { background: var(--accent-2); }
+
+  /* ---------- Сцена ---------- */
+  .stage { height: 1400vh; position: relative; }
+  .viewport { height: 100vh; width: 100%; overflow: hidden; position: relative; background: var(--paper); }
+  #film {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; display: block;
+    filter: saturate(.72) contrast(.94) sepia(.14) brightness(1.06);
+  }
+  /* ---------- Hero: журнальный разворот ---------- */
+  .hero {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    pointer-events: none;
+  }
+  .ppanel {
+    background: var(--paper);
+    position: relative;
+  }
+  .ppanel.top {
+    height: max(14vh, 118px);
+    display: flex; align-items: center;
+    padding: 10px 6vw 0;
+  }
+  .ppanel.top .row {
+    width: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .ppanel.top .left .caps { color: var(--muted); }
+  .ppanel.top .left .y { font-size: 24px; margin: 5px 0; }
+  .ppanel.top .mid {
+    font-size: 22px;
+  }
+  .ppanel.top .right { text-align: right; display: flex; align-items: center; gap: 14px; }
+  .ppanel.top .sw { display: inline-flex; gap: 4px; }
+  .ppanel.top .sw i { width: 14px; height: 14px; display: block; }
+  .ppanel.top .sw i:nth-child(1) { background: var(--ink); margin-top: -7px; }
+  .ppanel.top .sw i:nth-child(2) { background: var(--accent); }
+  .ppanel.top .sw i:nth-child(3) { background: var(--accent-2); margin-top: 7px; }
+  .ppanel.top .right .caps { color: var(--muted); display: block; text-align: left; }
+
+  .window { flex: 1; }
+
+  .ppanel.bot {
+    height: max(26vh, 220px); margin-top: auto;
+    padding: 30px 6vw 0;
+  }
+  .ppanel.bot .cols {
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px;
+    align-items: start;
+  }
+  .ppanel.bot h1 {
+    font-size: clamp(40px, 6.2vw, 104px);
+    font-weight: 300; line-height: 1.0; letter-spacing: -.035em;
+    color: #000;
+    white-space: nowrap;
+  }
+  .ppanel.bot h1 b { font-weight: 700; }
+  .ppanel.bot .right { max-width: 460px; justify-self: end; }
+  .ppanel.bot .nrow { display: flex; gap: 14px; align-items: baseline; margin-bottom: 4px; }
+  .ppanel.bot .nrow .n { font-size: 22px; min-width: 68px; }
+  .ppanel.bot .nrow .d { font-size: 11px; color: rgba(22,22,19,.7); }
+  .ppanel.bot p.lead {
+    margin-top: 10px; font-size: 12px; line-height: 1.65; text-align: justify;
+    color: rgba(22,22,19,.75);
+  }
+  /* уголки по краям видео-окна */
+  .ppanel .wmark { position: absolute; font-size: 22px; opacity: .8; }
+  .ppanel.top .wmark { bottom: -34px; }
+  .ppanel.bot .wmark { top: -36px; }
+  .ppanel .wmark.l { left: 6vw; }
+  .ppanel .wmark.r { right: 6vw; }
+
+  .scroll-hint {
+    position: absolute; right: 6vw; bottom: 22px;
+    font-size: 10px; letter-spacing: .4em; text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0; /* появляется, когда архив кадров загружен */
+  }
+  .scroll-hint b { font-weight: 400; display: inline-block; animation: nudge 1.6s ease-in-out infinite; }
+  @keyframes nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  /* ---------- Подписи-точки ---------- */
+  .cap {
+    position: absolute; z-index: 10;
+    max-width: min(640px, 46vw);
+    opacity: 0;
+    pointer-events: none;
+    background: var(--paper);
+    padding: 38px 42px 36px;
+    clip-path: polygon(
+      0 0, 88% 0, 88% 7%, 100% 7%, 100% 82%,
+      93% 82%, 93% 100%, 8% 100%, 8% 93%, 0 93%
+    );
+  }
+  .cap .num {
+    font-size: 12px; letter-spacing: .34em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cap .num::before { content: ''; width: 12px; height: 12px; background: var(--accent); }
+  .cap h2 {
+    font-size: clamp(44px, 4.8vw, 72px);
+    font-weight: 700; line-height: 1.0; letter-spacing: -.025em;
+    margin: 20px 0 18px;
+  }
+  .cap p {
+    font-size: 16px; line-height: 1.7;
+    color: rgba(22,22,19,.78);
+    text-align: justify;
+  }
+  .cap .arrow {
+    position: absolute; top: 34px; right: 48px;
+    font-size: 28px;
+  }
+  #cap1 { left: 6vw; bottom: 11vh; }
+  #cap2 { right: 6vw; bottom: 13vh; }
+  #cap3 { left: 6vw; bottom: 11vh; }
+
+  /* ---------- Секции после полёта ---------- */
+  section { position: relative; }
+
+  /* Журнал объекта */
+  .archive { padding: 130px 8vw 90px; }
+  .archive .grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px 36px;
+  }
+  .archive figure {
+    background: var(--paper);
+    padding: 12px 12px 14px;
+    box-shadow: 10px 10px 0 rgba(22,22,19,.07);
+  }
+  .archive figure:nth-child(odd) { transform: rotate(-.7deg); }
+  .archive figure:nth-child(even) { transform: rotate(.6deg) translateY(18px); }
+  .archive figure .ph { overflow: hidden; }
+  .archive img {
+    width: 100%; display: block;
+    filter: saturate(.72) contrast(.94) sepia(.14) brightness(1.06);
+  }
+  .archive figcaption {
+    display: flex; justify-content: space-between;
+    margin-top: 12px;
+    font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(22,22,19,.65);
+  }
+  .archive .foot {
+    display: flex; justify-content: space-between;
+    margin-top: 80px;
+    font-size: 11px; color: rgba(22,22,19,.6);
+  }
+
+  /* Цифры и Направления — одна сетка */
+  .facts { padding: 120px 8vw 130px; }
+  .dirs { padding-bottom: 30px; }
+  .dirs .t {
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: 700; letter-spacing: -.01em; line-height: 1.1;
+  }
+  .facts .grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(22,22,19,.25);
+  }
+  .facts .cell {
+    padding: 34px 26px 40px 0;
+    border-bottom: 1px solid rgba(22,22,19,.25);
+  }
+  .facts .cell + .cell { border-left: 1px solid rgba(22,22,19,.15); padding-left: 26px; }
+  .facts .n {
+    font-size: clamp(44px, 5vw, 72px);
+    font-weight: 300; letter-spacing: -.03em; line-height: 1;
+  }
+  .facts .n small { font-size: .38em; letter-spacing: 0; vertical-align: .5em; color: var(--accent); font-weight: 700; }
+  .facts .d { margin-top: 14px; font-size: 12px; line-height: 1.6; color: rgba(22,22,19,.7); max-width: 210px; }
+  .facts .coords {
+    margin-top: 90px;
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 20px;
+  }
+  .facts .coords .big {
+    font-size: clamp(26px, 3.4vw, 48px);
+    font-weight: 300; letter-spacing: .04em;
+  }
+  .facts .coords .big b { font-weight: 700; }
+  .facts .coords .side { max-width: 320px; font-size: 12px; line-height: 1.7; color: rgba(22,22,19,.7); }
+
+  /* ---------- Заявка ---------- */
+  .outro {
+    min-height: 100vh;
+    position: relative;
+    padding: 140px 8vw 70px;
+    overflow: hidden;
+  }
+  .outro .cols {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 60px;
+    position: relative; z-index: 2;
+  }
+  .outro h2 {
+    font-size: clamp(46px, 6.4vw, 86px);
+    font-weight: 300; line-height: 1.04; letter-spacing: -.03em;
+    color: #000;
+  }
+  .outro h2 b { font-weight: 700; }
+  .outro .badge {
+    display: inline-block; margin-top: 34px;
+    background: var(--steel); color: var(--paper);
+    padding: 8px 16px;
+    font-size: 15px; letter-spacing: .06em;
+  }
+  .outro .founder {
+    margin-top: 40px; max-width: 470px;
+    font-size: 13px; line-height: 1.75; text-align: justify;
+    color: rgba(22,22,19,.72);
+  }
+  .outro .founder-sign { margin-top: 14px; color: var(--muted); }
+  .outro .right { padding-top: 12px; }
+  .outro .right p {
+    font-size: 14px; line-height: 1.75; text-align: justify;
+    color: rgba(22,22,19,.8);
+    max-width: 380px;
+    margin-bottom: 22px;
+  }
+  .outro a.cta {
+    display: inline-block; margin-top: 10px;
+    background: var(--ink); color: var(--paper);
+    padding: 16px 34px; text-decoration: none;
+    font-size: 11px; letter-spacing: .3em; text-transform: uppercase;
+    transition: background .3s;
+  }
+  .outro a.cta:hover { background: var(--steel); }
+  .outro .wm {
+    position: absolute; right: -2vw; bottom: -6vw; z-index: 1;
+    font-size: clamp(180px, 30vw, 420px);
+    font-weight: 700; line-height: .8; letter-spacing: -.05em;
+    color: rgba(22,22,19,.05);
+    pointer-events: none;
+  }
+  .outro .footrow {
+    position: relative; z-index: 2;
+    margin-top: 110px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    font-size: 11px; color: rgba(22,22,19,.6);
+    border-top: 1px solid rgba(22,22,19,.15);
+    padding-top: 18px;
+  }
+
+  @media (max-width: 720px) {
+    header { padding: 16px; }
+    header .chip { font-size: 8px; letter-spacing: .2em; }
+    .ppanel.top { height: max(13vh, 104px); padding: 8px 5vw 0; }
+    .ppanel.top .mid { display: none; }
+    .ppanel.bot { height: max(22vh, 150px); padding: 20px 5vw 0; }
+    .ppanel.bot .cols { grid-template-columns: 1fr; gap: 18px; }
+    .ppanel.bot .right { display: none; }
+    .ppanel.bot h1 { font-size: clamp(34px, 10vw, 64px); }
+    .cap { left: 16px !important; right: 16px !important; bottom: 9vh !important; max-width: none; }
+    .archive { padding: 90px 6vw 70px; }
+    .archive .grid { grid-template-columns: 1fr 1fr; gap: 28px 18px; }
+    .facts { padding: 90px 6vw; }
+    .facts .grid { grid-template-columns: 1fr 1fr; }
+    .facts .cell + .cell { border-left: none; padding-left: 0; }
+    .facts .cell:nth-child(even) { border-left: 1px solid rgba(22,22,19,.15); padding-left: 20px; }
+    .sndbox { left: 16px; }
+    .outro { padding: 110px 6vw 50px; }
+    .outro .cols { grid-template-columns: 1fr; gap: 44px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="gridlay"></div>
+<div class="paperlite"></div>
+
+<header id="topbar">
+  <span class="chip">Люкс-Строй<br>Facade contractor</span>
+  <span class="chip">50°36′ N · 36°35′ E <span class="sw"><i></i><i></i><i></i></span></span>
+</header>
+
+<div class="stage" id="stage">
+  <div class="viewport tex" id="viewport">
+    <canvas id="film"></canvas>
+    <div class="loadtag caps" id="loadtag">объект · 0%</div>
+
+    <!-- Журнальный разворот: бумага сверху и снизу, видео в «окне» -->
+    <div class="hero" id="hero">
+      <div class="ppanel top" id="pTop">
+        <div class="row">
+          <div class="left">
+            <span class="caps">Facade contractor</span>
+            <div class="y">2K26</div>
+            <span class="caps">Civil&nbsp;&nbsp;·&nbsp;&nbsp;industrial</span>
+          </div>
+          <div class="mid">←</div>
+          <div class="right">
+            <span class="sw"><i></i><i></i><i></i></span>
+            <span class="caps">Object<br>report</span>
+          </div>
+        </div>
+        <span class="wmark l">⌐</span>
+        <span class="wmark r" style="transform: scaleX(-1);">⌐</span>
+      </div>
+
+      <div class="window"></div>
+
+      <div class="ppanel bot" id="pBot">
+        <span class="wmark l" style="transform: scale(-1);">⌐</span>
+        <span class="wmark r" style="transform: scaleY(-1);">⌐</span>
+        <div class="cols">
+          <div>
+            <h1>люкс-<b>строй</b>&nbsp;.</h1>
+          </div>
+          <div class="right">
+            <div class="nrow"><span class="n">15+</span><span class="d">лет опыта команды в гражданском и промышленном строительстве</span></div>
+            <div class="nrow"><span class="n">1+</span><span class="d">млрд рублей — совокупная стоимость проектов с участием специалистов</span></div>
+            <p class="lead">Специализированный фасадный подрядчик: навесные вентилируемые фасады, керамогранит, металлокассеты, композит, клинкер и штукатурные системы. Белгород · ЦФО · Московская область; крупные проекты — по всей России.</p>
+          </div>
+        </div>
+        <div class="scroll-hint">Листайте <b>↓</b></div>
+      </div>
+    </div>
+
+    <div class="cap" id="cap1">
+      <div class="num">01 — Объект</div>
+      <span class="arrow">↗</span>
+      <h2>выход на объект&nbsp;.</h2>
+      <p>Приёмка строительного фронта, входной контроль документации и материалов, геодезия и разметка. Каждый этап фиксируем в журнале и фотоотчёте — это основа исполнительной документации.</p>
+    </div>
+
+    <div class="cap" id="cap2">
+      <div class="num">02 — Подсистема</div>
+      <span class="arrow">↗</span>
+      <h2>каркас одевается&nbsp;.</h2>
+      <p>Кронштейны, направляющие, утеплитель и ветрозащитные мембраны. Контроль монтажа креплений, противопожарных элементов и геометрии фасада — на каждой захватке.</p>
+    </div>
+
+    <div class="cap" id="cap3">
+      <div class="num">03 — Облицовка</div>
+      <span class="arrow">↗</span>
+      <h2>фасад под ключ&nbsp;.</h2>
+      <p>Керамогранит, металлокассеты, композитные и фиброцементные панели, клинкер. Примыкания, откосы, парапеты — и объект передаётся с полным комплектом исполнительной документации.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- Журнал объекта ---------- -->
+<section class="archive">
+  <div class="sechead reveal">
+    <div class="num">04 — Журнал объекта</div>
+    <span class="arrow">↗</span>
+  </div>
+  <div class="grid">
+    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0001.webp" alt="Строительная площадка, старт объекта" loading="lazy"></div><figcaption><span>кадр 0001</span><span>объект</span></figcaption></figure>
+    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0060.webp" alt="Подготовка строительного фронта" loading="lazy"></div><figcaption><span>кадр 0060</span><span>фронт работ</span></figcaption></figure>
+    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0096.webp" alt="Геодезия и разметка площадки" loading="lazy"></div><figcaption><span>кадр 0096</span><span>разметка</span></figcaption></figure>
+    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0170.webp" alt="Монтаж фасадной подсистемы на каркасе" loading="lazy"></div><figcaption><span>кадр 0170</span><span>подсистема</span></figcaption></figure>
+    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0217.webp" alt="Утепление и мембраны фасада" loading="lazy"></div><figcaption><span>кадр 0217</span><span>утепление</span></figcaption></figure>
+    <figure class="reveal"><div class="ph tex"><img src="frames/frame_0339.webp" alt="Облицовка фасада, завершение объекта" loading="lazy"></div><figcaption><span>кадр 0339</span><span>облицовка</span></figcaption></figure>
+  </div>
+  <div class="foot reveal">
+    <span>camera : фотофиксация хода работ, 2K26</span>
+    <span>журнал ведёт люкс-строй</span>
+  </div>
+</section>
+
+<!-- ---------- Направления ---------- -->
+<section class="facts dirs">
+  <div class="sechead reveal">
+    <div class="num">05 — Направления</div>
+    <span class="arrow">↗</span>
+  </div>
+  <div class="grid">
+    <div class="cell reveal"><div class="t">Вентфасады</div><div class="d">навесные системы под ключ: подсистема, утеплитель, мембраны, облицовка</div></div>
+    <div class="cell reveal"><div class="t">Облицовка</div><div class="d">керамогранит, металлокассеты, композитные и фиброцементные панели, клинкер</div></div>
+    <div class="cell reveal"><div class="t">Штукатурные фасады</div><div class="d">утепление, армирование, декоративные слои; ремонт и восстановление фасадов</div></div>
+    <div class="cell reveal"><div class="t">Отделка МОП</div><div class="d">штукатурка, шпаклевание, окраска, комплексная отделка мест общего пользования</div></div>
+  </div>
+</section>
+
+<!-- ---------- Цифры ---------- -->
+<section class="facts">
+  <div class="sechead reveal">
+    <div class="num">06 — Цифры</div>
+    <span class="arrow">↗</span>
+  </div>
+  <div class="grid">
+    <div class="cell reveal"><div class="n">15+<small>ЛЕТ</small></div><div class="d">опыт команды в гражданском и промышленном строительстве</div></div>
+    <div class="cell reveal"><div class="n">1+<small>МЛРД ₽</small></div><div class="d">совокупная стоимость проектов с участием специалистов компании</div></div>
+    <div class="cell reveal"><div class="n">6<small>ОБЪЕКТОВ</small></div><div class="d">компания готова вести параллельно, контракты от 5 до 100 млн ₽</div></div>
+    <div class="cell reveal"><div class="n">7<small>ДНЕЙ</small></div><div class="d">на коммерческое предложение после получения комплекта документации</div></div>
+  </div>
+  <div class="coords reveal">
+    <div class="big">50°36′ N <b>—</b> 36°35′ E</div>
+    <div class="side">База — Белгородская область; работаем по ЦФО и Московской области, готовы к крупным проектам по всей России. Специалист выезжает на объект для осмотра и уточнения условий производства работ.</div>
+  </div>
+</section>
+
+<!-- ---------- Заявка ---------- -->
+<section class="outro">
+  <div class="sechead reveal">
+    <div class="num">07 — Заявка</div>
+    <span class="arrow">↗</span>
+  </div>
+  <div class="cols">
+    <div class="reveal">
+      <h2>фасад,<br>который можно<br><b>доверить</b>&nbsp;.</h2>
+      <span class="badge">расчёт — бесплатно</span>
+      <p class="founder">«В строительстве репутация создаётся не обещаниями, а выполненными обязательствами. Мы стремимся стать подрядчиком, которому можно передать сложный участок работ — и быть уверенным, что компания доведёт его до результата.»</p>
+      <p class="founder-sign caps">Заречный Сергей Вадимович — основатель и исполнительный директор</p>
+    </div>
+    <div class="right reveal">
+      <p>Пришлите проектную документацию, узлы и ведомость объёмов — подготовим коммерческое предложение в течение недели. Предварительный расчёт бесплатный, специалист выезжает на объект для осмотра и уточнения условий.</p>
+      <p class="caps" style="color: var(--muted); text-align: left;">Член СРО · гарантия на выполненные работы по договору</p>
+      <!-- TODO: заменить на реальные контакты компании -->
+      <a class="cta" href="tel:+79000000000">Запросить расчёт</a>
+    </div>
+  </div>
+  <div class="wm">15</div>
+  <div class="footrow">
+    <span>coords : 50°36′ N · 36°35′ E</span>
+    <span>ООО «ЛЮКС-СТРОЙ» · Фасадные работы</span>
+    <span>Белгород · ЦФО · Московская область</span>
+  </div>
+</section>
+
+<div class="sndbox">
+  <button class="sndbtn caps" id="sndbtn">звук · выкл</button>
+  <input type="range" id="sndvol" min="0" max="100" value="60" aria-label="Громкость">
+</div>
+
+<script src="js/gsap.min.js"></script>
+<script src="js/ScrollTrigger.min.js"></script>
+<script src="js/lenis.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Плавный скролл как в cosmos-project: Lenis + синхронизация со ScrollTrigger
+const lenis = new Lenis();
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+lenis.stop(); // скролл заблокирован, пока грузится архив кадров
+
+const FRAME_COUNT = 339;
+const framePath = i => `frames/frame_${String(i + 1).padStart(4, '0')}.webp`;
+
+const canvas = document.getElementById('film');
+const ctx = canvas.getContext('2d');
+const images = [];
+const seq = { frame: 0 };
+
+function resize() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(innerWidth * dpr);
+  canvas.height = Math.round(innerHeight * dpr);
+  render();
+}
+
+function render() {
+  const img = images[Math.round(seq.frame)];
+  if (!img || !img.complete) return;
+  const cw = canvas.width, ch = canvas.height;
+  const ir = img.width / img.height, cr = cw / ch;
+  let dw, dh;
+  if (cr > ir) { dw = cw; dh = cw / ir; } else { dh = ch; dw = ch * ir; }
+  ctx.clearRect(0, 0, cw, ch);
+  ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+}
+
+function preload() {
+  const tag = document.getElementById('loadtag');
+  let loaded = 0;
+  return Promise.all(Array.from({ length: FRAME_COUNT }, (_, i) => {
+    const img = new Image();
+    img.src = framePath(i);
+    images[i] = img;
+    // decode() = загрузка + декодирование за один проход, без второй волны прогрева
+    return img.decode().catch(() => {}).then(() => {
+      loaded++;
+      if (i === 0) resize(); // кадр 0 появляется в окне сразу, не дожидаясь остальных
+      tag.textContent = 'объект · ' + Math.round(loaded / FRAME_COUNT * 100) + '%';
+    });
+  }));
+}
+
+// ---------- Звук: эмбиент сцен + ветер от скорости скролла ----------
+// ponytail: HTMLAudio + volume вместо Web Audio — fetch/decodeAudioData не работают
+// с file://; при публикации на http можно перейти на Web Audio (бесшовные лупы, громкость на iOS)
+const VOL = { air: .7, wind: .5, master: .6 };
+// опорные точки громкости сцен: [кадр, уровень], между точками — линейная интерполяция
+// air — низкочастотный гул высоты; у земли уступает место ветру от скорости полёта
+const SCENES = {
+  air: [[0, 1], [96, .55], [338, .35]]
+};
+const tracks = {};
+const snd = { on: false, master: 0, wind: 0, scene: 1 }; // scene → 0, когда сцена пролистана
+
+function levelAt(pts, f) {
+  if (f <= pts[0][0]) return pts[0][1];
+  for (let i = 1; i < pts.length; i++) {
+    if (f <= pts[i][0]) {
+      const [f0, v0] = pts[i - 1], [f1, v1] = pts[i];
+      return v0 + (v1 - v0) * (f - f0) / (f1 - f0);
+    }
+  }
+  return pts[pts.length - 1][1];
+}
+
+function applyVolumes() {
+  if (!tracks.wind) return;
+  for (const name in SCENES) tracks[name].volume = Math.min(1, levelAt(SCENES[name], seq.frame) * VOL[name] * VOL.master * snd.master * snd.scene);
+  tracks.wind.volume = Math.min(1, snd.wind * VOL.wind * VOL.master * snd.master);
+}
+
+function soundToggle(on) {
+  snd.on = on;
+  document.getElementById('sndbtn').textContent = 'звук · ' + (on ? 'вкл' : 'выкл');
+  if (on && !tracks.wind) {
+    for (const name of [...Object.keys(SCENES), 'wind']) {
+      const a = new Audio('audio/' + name + '.mp3');
+      a.loop = true; a.volume = 0;
+      tracks[name] = a;
+    }
+    // play() всех сразу внутри пользовательского жеста; неактивные играют беззвучно
+    Object.values(tracks).forEach(a => a.play().catch(() => {}));
+  }
+  gsap.to(snd, { master: on ? 1 : 0, duration: on ? 1.5 : .6, onUpdate: applyVolumes });
+}
+
+// первый клик/тап/клавиша включает звук сам; после любого явного действия авто-включение отключается
+let sndAuto = e => {
+  if (e && e.target.closest && e.target.closest('#sndbtn')) return;
+  sndAuto = () => {};
+  soundToggle(true);
+};
+document.addEventListener('pointerdown', e => sndAuto(e));
+document.addEventListener('keydown', e => sndAuto(e));
+document.getElementById('sndbtn').addEventListener('click', () => {
+  sndAuto = () => {};
+  soundToggle(!snd.on);
+});
+
+// регулятор громкости: рулит общим уровнем; тронул при выключенном звуке — включает
+document.getElementById('sndvol').addEventListener('input', e => {
+  VOL.master = e.target.value / 100;
+  if (!snd.on) { sndAuto = () => {}; soundToggle(true); } else applyVolumes();
+});
+
+// ветер — от скорости смены КАДРОВ, не скролла: плашки/секции ветра не дают, полёт — даёт
+let prevFrame = 0;
+gsap.ticker.add((t, dt) => {
+  const fps = Math.abs(seq.frame - prevFrame) / Math.max(dt, 1) * 1000; // кадров полёта в секунду
+  prevFrame = seq.frame;
+  if (!snd.on || !tracks.wind) return;
+  snd.wind += (Math.min(1, fps / 30) - snd.wind) * .08;
+  applyVolumes();
+});
+
+// стартовое положение видео: общий план, чуть опущен под верхнюю панель
+gsap.set('#film', { yPercent: 5 });
+
+preload().then(() => {
+  resize();
+  window.addEventListener('resize', resize);
+  lenis.start();
+
+  gsap.to('#loadtag', { opacity: 0, duration: .5, onComplete: () => document.getElementById('loadtag').remove() });
+  gsap.to('.scroll-hint', { opacity: 1, duration: .8 });
+
+  const tl = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: {
+      trigger: '#stage',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1,
+      pin: '#viewport',
+      pinSpacing: false,
+      anticipatePin: 1
+    }
+  });
+
+  // Структура: разворот раскрывается → полёт → СТОП-КАДР (текст) → полёт → … → финал.
+  // Стыки роликов: кадры 96 и 217 (там конец ролика А == начало ролика Б).
+
+  // разворот: кадр стоит неподвижно, разъезжаются только бумажные полосы
+  tl.to('#pTop', { yPercent: -101, duration: .05, ease: 'power1.in' }, .008);
+  tl.to('#pBot', { yPercent: 101, duration: .05, ease: 'power1.in' }, .008);
+  tl.to('#topbar', { opacity: 1, duration: .02 }, .055);
+
+  // — полёт 1 (начинается после полного раскрытия): общий план площадки;
+  //   стартовый сдвиг кадра гасим в начале полёта — в движении он незаметен
+  tl.to('#film', { yPercent: 0, duration: .06, ease: 'power1.inOut' }, .06);
+
+  // полёты и плато: [конечный кадр, старт полёта, длит. полёта, вход плашки, длит. входа, уход плашки]
+  // последняя плашка остаётся до конца — ухода нет
+  [
+    [96,              .06, .165, .235, .045, .325], // площадка → стоп «объект»
+    [217,             .36, .215, .585, .045, .675], // каркас → стоп «подсистема»
+    [FRAME_COUNT - 1, .71, .215, .935, .05,  null]  // здание → стоп «облицовка»
+  ].forEach(([frame, at, dur, capAt, capDur, outAt], i) => {
+    tl.to(seq, { frame, snap: 'frame', duration: dur, onUpdate: render }, at);
+    tl.fromTo('#cap' + (i + 1), { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: capDur, ease: 'power2.out' }, capAt);
+    if (outAt) tl.to('#cap' + (i + 1), { opacity: 0, y: -40, duration: .035, ease: 'power2.in' }, outAt);
+  });
+  tl.to({}, { duration: .015 }, .985); // добивка, чтобы таймлайн дотянулся до конца пина
+
+  // сцена пролистана (журнал наезжает на экран) — эмбиент площадки плавно уходит; назад — возвращается
+  gsap.to(snd, {
+    scene: 0, ease: 'none',
+    scrollTrigger: { trigger: '.archive', start: 'top bottom', end: 'top -60%', scrub: true }
+  });
+
+  // стандартное появление контента в секциях после полёта
+  gsap.utils.toArray('.reveal').forEach(el => {
+    gsap.from(el, {
+      y: 44, opacity: 0, duration: .9, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+});
+</script>
+</body>
+</html>

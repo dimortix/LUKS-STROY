@@ -1,0 +1,11 @@
+# Render Blueprint: если корень git-репозитория — эта папка (site/),
+# Render подхватит конфиг автоматически при «New → Blueprint».
+# Если репозиторий начинается уровнем выше, поправьте dockerfilePath/dockerContext.
+services:
+  - type: web
+    name: lux-stroy
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
