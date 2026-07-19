@@ -164,9 +164,9 @@
   }
   .ppanel.bot h1 b { font-weight: 600; color: var(--accent); }
   .ppanel.bot .right { max-width: 460px; justify-self: end; }
-  .ppanel.bot .nrow { display: flex; gap: 20px; align-items: center; margin-bottom: 16px; }
+  .ppanel.bot .nrow { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
   .ppanel.bot .nrow .n {
-    font-size: 40px; min-width: 110px;
+    font-size: 54px;
     font-family: var(--head); font-weight: 600; line-height: 1;
   }
   .ppanel.bot .nrow .d { font-size: 12px; line-height: 1.55; color: rgba(22,22,19,.72); max-width: 320px; }
@@ -221,7 +221,7 @@
   section { position: relative; }
 
   /* Журнал объекта */
-  .archive { padding: 130px 8vw 90px; }
+  .archive { padding: 110px 8vw 76px; }
   .archive .grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 44px 36px;
   }
@@ -236,9 +236,9 @@
     transform: translateY(-6px);
     box-shadow: 0 22px 44px rgba(20,24,28,.16);
   }
-  .archive figure .ph { overflow: hidden; }
+  .archive figure .ph { overflow: hidden; aspect-ratio: 16 / 10; }
   .archive img {
-    width: 100%; display: block;
+    width: 100%; height: 100%; object-fit: cover; display: block;
     filter: saturate(.85) contrast(.98) brightness(1.02);
   }
   .archive figcaption {
@@ -253,9 +253,8 @@
     font-size: 11px; color: rgba(22,22,19,.6);
   }
 
-  /* Цифры и Направления — одна сетка */
-  .facts { padding: 120px 8vw 130px; }
-  .dirs { padding-bottom: 30px; }
+  /* Цифры и Направления — одна сетка; единый вертикальный ритм секций: 76+76 */
+  .facts { padding: 76px 8vw 76px; }
   .facts.dirs .grid { grid-template-columns: repeat(3, 1fr); }
   .dirs .t {
     font-family: var(--head);
@@ -301,7 +300,7 @@
   .outro {
     min-height: 100vh;
     position: relative;
-    padding: 140px 8vw 70px;
+    padding: 76px 8vw 70px;
     overflow: hidden;
   }
   .outro .cols {
@@ -449,9 +448,9 @@
     .ppanel.bot .right { display: none; }
     .ppanel.bot h1 { font-size: clamp(34px, 10vw, 64px); }
     .cap { left: 16px !important; right: 16px !important; bottom: 9vh !important; max-width: none; }
-    .archive { padding: 90px 6vw 70px; }
+    .archive { padding: 90px 6vw 68px; }
     .archive .grid { grid-template-columns: 1fr 1fr; gap: 28px 18px; }
-    .facts { padding: 90px 6vw; }
+    .facts { padding: 68px 6vw; }
     .facts .grid { grid-template-columns: 1fr 1fr; }
     .facts .cell + .cell { border-left: none; padding-left: 0; }
     .facts .cell:nth-child(even) { border-left: 1px solid rgba(22,22,19,.15); padding-left: 20px; }
@@ -469,7 +468,7 @@
     .dirs .cell, .dirs .cell:first-child, .dirs .cell:last-child { padding: 24px 6vw 30px; border-left: none; }
     .objmeta { grid-template-columns: 1fr; }
     .sndbox { left: 16px; }
-    .outro { padding: 110px 6vw 50px; }
+    .outro { padding: 68px 6vw 50px; }
     .outro .cols { grid-template-columns: 1fr; gap: 44px; }
   }
 </style>
@@ -549,12 +548,12 @@
     <div class="num">01 — Объекты</div>
   </div>
   <div class="grid">
-    <figure class="reveal" data-obj="0" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0001.webp" alt="Объект 01 — подготовка площадки" loading="lazy"></div><figcaption><span>объект 01</span><span>площадка</span></figcaption></figure>
-    <figure class="reveal" data-obj="1" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0060.webp" alt="Объект 02 — строительный фронт" loading="lazy"></div><figcaption><span>объект 02</span><span>фронт работ</span></figcaption></figure>
-    <figure class="reveal" data-obj="2" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0096.webp" alt="Объект 03 — геодезия и разметка" loading="lazy"></div><figcaption><span>объект 03</span><span>разметка</span></figcaption></figure>
-    <figure class="reveal" data-obj="3" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0170.webp" alt="Объект 04 — монтаж подсистемы" loading="lazy"></div><figcaption><span>объект 04</span><span>подсистема</span></figcaption></figure>
-    <figure class="reveal" data-obj="4" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0217.webp" alt="Объект 05 — утепление фасада" loading="lazy"></div><figcaption><span>объект 05</span><span>утепление</span></figcaption></figure>
-    <figure class="reveal" data-obj="5" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0339.webp" alt="Объект 06 — облицовка фасада" loading="lazy"></div><figcaption><span>объект 06</span><span>облицовка</span></figcaption></figure>
+    <figure class="reveal" data-obj="0" role="button" tabindex="0"><div class="ph"><img src="objects/o1-main.webp" alt="Объект 01 — ЖК в Белгороде, НВФ из металлокассет" loading="lazy"></div><figcaption><span>объект 01</span><span>жк · белгород</span></figcaption></figure>
+    <figure class="reveal" data-obj="1" role="button" tabindex="0"><div class="ph"><img src="objects/o2-main.webp" alt="Объект 02 — Центр молодёжных инициатив, Белгород, НВФ из керамогранита" loading="lazy"></div><figcaption><span>объект 02</span><span>цми · белгород</span></figcaption></figure>
+    <figure class="reveal" data-obj="2" role="button" tabindex="0"><div class="ph"><img src="objects/o3-main.webp" alt="Объект 03 — Корочанская СОШ им. Д. К. Кромского, мокрый фасад" loading="lazy"></div><figcaption><span>объект 03</span><span>сош · короча</span></figcaption></figure>
+    <figure class="reveal" data-obj="3" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0230.webp" alt="Объект 04 — штукатурные работы на лесах" loading="lazy"></div><figcaption><span>объект 04</span><span>штукатурка</span></figcaption></figure>
+    <figure class="reveal" data-obj="4" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0285.webp" alt="Объект 05 — вентилируемый фасад" loading="lazy"></div><figcaption><span>объект 05</span><span>вентфасад</span></figcaption></figure>
+    <figure class="reveal" data-obj="5" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0339.webp" alt="Объект 06 — навесной фасад, панели-кассеты" loading="lazy"></div><figcaption><span>объект 06</span><span>нвф · панели</span></figcaption></figure>
   </div>
   <div class="foot reveal">
     <span>нажмите на объект, чтобы узнать подробности</span>
@@ -746,21 +745,20 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModals();
 });
 
-// ===== ДАННЫЕ ОБЪЕКТОВ: примеры-заглушки — заменить реальными объектами компании =====
-// frames — номера кадров (или подставьте пути к своим фото), meta — поля карточки
+// ===== ДАННЫЕ ОБЪЕКТОВ: первые три — реальные объекты компании; последние три — заглушки на кадрах =====
 const OBJECTS = [
-  { stage: 'подготовка площадки', frames: [1, 24, 48, 72, 96],
-    meta: { 'Место': 'г. Белгород', 'Работы': 'навесной вентилируемый фасад, керамогранит', 'Объём': '6 400 м²', 'Заказчик': 'девелоперская компания' } },
-  { stage: 'строительный фронт',  frames: [10, 40, 60, 80, 96],
-    meta: { 'Место': 'Белгородская область', 'Работы': 'фасад из металлокассет, откосы и парапеты', 'Объём': '4 200 м²', 'Заказчик': 'генеральный подрядчик' } },
-  { stage: 'геодезия и разметка', frames: [50, 70, 85, 96, 112],
-    meta: { 'Место': 'г. Старый Оскол', 'Работы': 'штукатурный фасад с утеплением', 'Объём': '8 100 м²', 'Заказчик': 'генеральный подрядчик' } },
-  { stage: 'монтаж подсистемы',   frames: [120, 150, 175, 200, 217],
-    meta: { 'Место': 'Московская область', 'Работы': 'вентфасад, композитные панели', 'Объём': '12 500 м²', 'Заказчик': 'девелоперская компания' } },
-  { stage: 'утепление фасада',    frames: [160, 185, 205, 217, 232],
+  { stage: 'жилой комплекс', photos: ['objects/o1-main.webp', 'objects/o1-1.webp', 'objects/o1-2.webp', 'objects/o1-3.webp', 'objects/o1-4.webp'],
+    meta: { 'Место': 'г. Белгород, ул. Горького, 54в', 'Работы': 'НВФ из металлокассет для жилого комплекса', 'Объём': '5 000 м²', 'Заказчик': '«Сибпромстрой»' } },
+  { stage: 'центр молодёжных инициатив', photos: ['objects/o2-main.webp', 'objects/o2-1.webp', 'objects/o2-2.webp', 'objects/o2-3.webp'],
+    meta: { 'Место': 'г. Белгород, ул. Студенческая, 17а', 'Работы': 'НВФ из керамогранита', 'Объём': '1 500 м²', 'Заказчик': 'Администрация г. Белгорода' } },
+  { stage: 'корочанская сош им. д. к. кромского', photos: ['objects/o3-main.webp', 'objects/o3-1.webp', 'objects/o3-2.webp', 'objects/o3-3.webp', 'objects/o3-4.webp'],
+    meta: { 'Место': 'г. Короча, ул. Пролетарская, 39', 'Работы': 'мокрый фасад, декоративная штукатурка', 'Объём': '5 400 м²', 'Заказчик': 'Администрация Белгородской области' } },
+  { stage: 'штукатурные работы',  frames: [185, 210, 230, 245, 255],
+    meta: { 'Место': 'Московская область', 'Работы': 'мокрый фасад, армирование, декоративный слой', 'Объём': '12 500 м²', 'Заказчик': 'девелоперская компания' } },
+  { stage: 'вентилируемый фасад', frames: [258, 275, 295, 315, 339],
     meta: { 'Место': 'г. Москва', 'Работы': 'утепление, мембраны, облицовка керамогранитом', 'Объём': '9 300 м²', 'Заказчик': 'генеральный подрядчик' } },
-  { stage: 'облицовка фасада',    frames: [250, 280, 305, 325, 339],
-    meta: { 'Место': 'г. Белгород', 'Работы': 'клинкерный фасад, отделка МОП', 'Объём': '5 700 м²', 'Заказчик': 'промышленное предприятие' } }
+  { stage: 'нвф · металлокассеты', frames: [270, 290, 310, 325, 339],
+    meta: { 'Место': 'г. Белгород', 'Работы': 'навесной вентилируемый фасад, металлокассеты', 'Объём': '5 700 м²', 'Заказчик': 'промышленное предприятие' } }
 ];
 
 document.querySelectorAll('[data-obj]').forEach(fig => {
@@ -768,8 +766,9 @@ document.querySelectorAll('[data-obj]').forEach(fig => {
     const o = OBJECTS[+fig.dataset.obj];
     document.getElementById('objNum').textContent = 'Объект 0' + (+fig.dataset.obj + 1);
     document.getElementById('objTitle').textContent = o.stage;
+    const srcs = o.photos || o.frames.map(f => `frames/frame_${String(f).padStart(4, '0')}.webp`);
     document.getElementById('objGrid').innerHTML =
-      o.frames.map(f => `<img src="frames/frame_${String(f).padStart(4, '0')}.webp" alt="Фото объекта" loading="lazy">`).join('');
+      srcs.map(s => `<img src="${s}" alt="Фото объекта" loading="lazy">`).join('');
     document.getElementById('objMeta').innerHTML =
       Object.entries(o.meta).map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
     openModal(document.getElementById('objModal'));
@@ -834,7 +833,7 @@ const VOL = { air: .7, wind: .5, master: .6 };
 // опорные точки громкости сцен: [кадр, уровень], между точками — линейная интерполяция
 // air — низкочастотный гул высоты; у земли уступает место ветру от скорости полёта
 const SCENES = {
-  air: [[0, 1], [96, .55], [338, .35]]
+  air: [[0, 1], [85, .6], [338, .35]]
 };
 const tracks = {};
 const snd = { on: false, master: 0, wind: 0, scene: 1 }; // scene → 0, когда сцена пролистана
@@ -853,7 +852,8 @@ function levelAt(pts, f) {
 function applyVolumes() {
   if (!tracks.wind) return;
   for (const name in SCENES) tracks[name].volume = Math.min(1, levelAt(SCENES[name], seq.frame) * VOL[name] * VOL.master * snd.master * snd.scene);
-  tracks.wind.volume = Math.min(1, snd.wind * VOL.wind * VOL.master * snd.master);
+  // ветер тоже гаснет вместе со сценой: за пределами видео звука нет
+  tracks.wind.volume = Math.min(1, snd.wind * VOL.wind * VOL.master * snd.master * snd.scene);
 }
 
 function soundToggle(on) {
@@ -938,12 +938,12 @@ preload().then(() => {
   tl.to('#film', { yPercent: 0, duration: .05, ease: 'power1.inOut' }, .06);
 
   // полёты и плато: [конечный кадр, старт полёта, длит. полёта, вход плашки, длит. входа, уход плашки]
-  // четыре этапа: смета → выход на объект → работы → сдача; последняя плашка остаётся
+  // четыре этапа = четыре ролика; стыки роликов (кадры 85/170/255) спрятаны в стоп-кадрах
   [
-    [50,              .06, .11, .185, .04, .275], // даль площадки → «смета и договор»
-    [96,              .30, .10, .415, .04, .51 ], // площадка ближе → «выход на объект»
-    [217,             .55, .14, .705, .04, .82 ], // каркас в работе → «работы на объекте»
-    [FRAME_COUNT - 1, .85, .12, .955, .04, null]  // готовый фасад → «сдача работ»
+    [85,              .06,  .13, .215, .04, .305], // площадка сверху → «смета и договор»
+    [170,             .335, .13, .49,  .04, .58 ], // леса/мобилизация → «выход на объект»
+    [255,             .61,  .13, .765, .04, .845], // фасадные работы → «работы на объекте»
+    [FRAME_COUNT - 1, .87,  .10, .955, .04, null]  // готовый фасад → «сдача работ»
   ].forEach(([frame, at, dur, capAt, capDur, outAt], i) => {
     tl.to(seq, { frame, snap: 'frame', duration: dur, onUpdate: render }, at);
     tl.fromTo('#cap' + (i + 1), { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: capDur, ease: 'power2.out' }, capAt);
@@ -951,10 +951,11 @@ preload().then(() => {
   });
   tl.to({}, { duration: .015 }, .985); // добивка, чтобы таймлайн дотянулся до конца пина
 
-  // сцена пролистана (журнал наезжает на экран) — эмбиент площадки плавно уходит; назад — возвращается
+  // звук живёт только на видео: как только сцена пролистана — быстро и полностью гаснет,
+  // при скролле назад к видео возвращается
   gsap.to(snd, {
     scene: 0, ease: 'none',
-    scrollTrigger: { trigger: '.archive', start: 'top bottom', end: 'top -60%', scrub: true }
+    scrollTrigger: { trigger: '.archive', start: 'top bottom', end: 'top 55%', scrub: true }
   });
 
   // стандартное появление контента в секциях после полёта
