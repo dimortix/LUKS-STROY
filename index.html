@@ -798,6 +798,14 @@ const ctx = canvas.getContext('2d');
 const images = [];
 const seq = { frame: 0 };
 
+// Мобильные держат кадры СЖАТЫМИ (blob), декодируя окно вокруг текущего кадра:
+// все 339 декодированных кадров iOS не вывозит — вытесняет из памяти, канвас белеет.
+const USE_BITMAPS = MOBILE && 'createImageBitmap' in window;
+const blobs = [];
+const bitmaps = new Map();
+const lru = [];
+let decodingIdx = -1;
+
 function resize() {
   const dpr = Math.min(window.devicePixelRatio || 1, MOBILE ? 1.5 : 2);
   canvas.width = Math.round(innerWidth * dpr);
@@ -805,9 +813,7 @@ function resize() {
   render();
 }
 
-function render() {
-  const img = images[Math.round(seq.frame)];
-  if (!img || !img.complete) return;
+function drawCover(img) {
   const cw = canvas.width, ch = canvas.height;
   const ir = img.width / img.height, cr = cw / ch;
   let dw, dh;
@@ -816,19 +822,67 @@ function render() {
   ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
 }
 
+function ensureBitmap(i) {
+  if (bitmaps.has(i) || decodingIdx === i || !blobs[i]) return;
+  decodingIdx = i;
+  createImageBitmap(blobs[i]).then(bmp => {
+    bitmaps.set(i, bmp);
+    lru.push(i);
+    if (lru.length > 24) {
+      const old = lru.shift();
+      const ob = bitmaps.get(old);
+      if (ob && old !== i) { ob.close && ob.close(); bitmaps.delete(old); }
+    }
+    decodingIdx = -1;
+    if (Math.round(seq.frame) === i) render();
+  }).catch(() => { decodingIdx = -1; });
+}
+
+function render() {
+  const i = Math.round(seq.frame);
+  if (USE_BITMAPS) {
+    let bmp = bitmaps.get(i);
+    if (!bmp) {
+      ensureBitmap(i);
+      let best = -1, bd = Infinity;
+      for (const k of bitmaps.keys()) {
+        const d = Math.abs(k - i);
+        if (d < bd) { bd = d; best = k; }
+      }
+      if (best < 0) return;
+      bmp = bitmaps.get(best);
+    }
+    drawCover(bmp);
+    return;
+  }
+  const img = images[i];
+  if (!img || !img.complete) return;
+  drawCover(img);
+}
+
 function preload() {
   const tag = document.getElementById('loadtag');
   let loaded = 0;
+  const tick = i => {
+    loaded++;
+    if (i === 0) resize(); // кадр 0 появляется в окне сразу, не дожидаясь остальных
+    tag.textContent = 'объект · ' + Math.round(loaded / FRAME_COUNT * 100) + '%';
+  };
+  if (USE_BITMAPS) {
+    return Promise.all(Array.from({ length: FRAME_COUNT }, (_, i) =>
+      fetch(framePath(i)).then(r => r.blob()).then(b => {
+        blobs[i] = b;
+        if (i === 0) return createImageBitmap(b).then(bmp => { bitmaps.set(0, bmp); lru.push(0); tick(i); });
+        tick(i);
+      }).catch(() => tick(i))
+    ));
+  }
   return Promise.all(Array.from({ length: FRAME_COUNT }, (_, i) => {
     const img = new Image();
     img.src = framePath(i);
     images[i] = img;
     // decode() = загрузка + декодирование за один проход, без второй волны прогрева
-    return img.decode().catch(() => {}).then(() => {
-      loaded++;
-      if (i === 0) resize(); // кадр 0 появляется в окне сразу, не дожидаясь остальных
-      tag.textContent = 'объект · ' + Math.round(loaded / FRAME_COUNT * 100) + '%';
-    });
+    return img.decode().catch(() => {}).then(() => tick(i));
   }));
 }
 
