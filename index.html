@@ -439,6 +439,10 @@
   }
 
   @media (max-width: 720px) {
+    /* производительность: без зерна, блендов и фильтров на телефонах */
+    body::after { display: none; }
+    #film, .archive img, .objgrid img { filter: none; }
+    .archive figure { transition: none; }
     header { padding: 16px; }
     header .chip { font-size: 8px; letter-spacing: .2em; }
     .ppanel.top { height: max(13vh, 104px); padding: 8px 5vw 0; }
@@ -454,13 +458,12 @@
     .facts .grid { grid-template-columns: 1fr 1fr; }
     .facts .cell + .cell { border-left: none; padding-left: 0; }
     .facts .cell:nth-child(even) { border-left: 1px solid rgba(22,22,19,.15); padding-left: 20px; }
-    /* цифры: одна строка и на мобильных */
-    .facts.stats .grid { grid-template-columns: repeat(5, 1fr); }
-    .stats .cell { padding: 16px 6px 20px 0; }
-    .stats .cell + .cell { border-left: 1px solid rgba(20,24,28,.15); padding-left: 8px; }
-    .stats .cell:nth-child(even) { padding-left: 8px; }
-    .stats .n { font-size: 21px; }
-    .stats .d { font-size: 9px; line-height: 1.5; }
+    /* цифры на мобильных — друг за другом, во всю ширину */
+    .facts.stats .grid { grid-template-columns: 1fr; }
+    .stats .cell, .stats .cell:first-child, .stats .cell:nth-child(even) {
+      padding: 22px 0 24px; border-left: none;
+    }
+    .stats .d { max-width: none; }
     /* направления: одна колонка во всю ширину */
     .dirs { padding-left: 0; padding-right: 0; }
     .dirs .sechead { margin-left: 6vw; margin-right: 6vw; }
@@ -766,7 +769,7 @@ document.querySelectorAll('[data-obj]').forEach(fig => {
     const o = OBJECTS[+fig.dataset.obj];
     document.getElementById('objNum').textContent = 'Объект 0' + (+fig.dataset.obj + 1);
     document.getElementById('objTitle').textContent = o.stage;
-    const srcs = o.photos || o.frames.map(f => `frames/frame_${String(f).padStart(4, '0')}.webp`);
+    const srcs = o.photos || o.frames.map(f => `${FRAME_DIR}/frame_${String(f).padStart(4, '0')}.webp`);
     document.getElementById('objGrid').innerHTML =
       srcs.map(s => `<img src="${s}" alt="Фото объекта" loading="lazy">`).join('');
     document.getElementById('objMeta').innerHTML =
@@ -785,7 +788,10 @@ gsap.ticker.lagSmoothing(0);
 lenis.stop(); // скролл заблокирован, пока грузится архив кадров
 
 const FRAME_COUNT = 339;
-const framePath = i => `frames/frame_${String(i + 1).padStart(4, '0')}.webp`;
+// на телефонах — облегчённый набор кадров 1280×720: быстрее грузится и не душит память
+const MOBILE = matchMedia('(max-width: 820px)').matches;
+const FRAME_DIR = MOBILE ? 'frames-m' : 'frames';
+const framePath = i => `${FRAME_DIR}/frame_${String(i + 1).padStart(4, '0')}.webp`;
 
 const canvas = document.getElementById('film');
 const ctx = canvas.getContext('2d');
@@ -793,7 +799,7 @@ const images = [];
 const seq = { frame: 0 };
 
 function resize() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const dpr = Math.min(window.devicePixelRatio || 1, MOBILE ? 1.5 : 2);
   canvas.width = Math.round(innerWidth * dpr);
   canvas.height = Math.round(innerHeight * dpr);
   render();
@@ -888,6 +894,13 @@ document.getElementById('sndbtn').addEventListener('click', () => {
 document.getElementById('sndvol').addEventListener('input', e => {
   VOL.master = e.target.value / 100;
   if (!snd.on) { sndAuto = () => {}; soundToggle(true); } else applyVolumes();
+});
+
+// ушёл на другую вкладку/свернул — звук ставится на паузу, вернулся — продолжается
+document.addEventListener('visibilitychange', () => {
+  if (!tracks.wind) return;
+  if (document.hidden) Object.values(tracks).forEach(a => a.pause());
+  else if (snd.on) Object.values(tracks).forEach(a => a.play().catch(() => {}));
 });
 
 // ветер — от скорости смены КАДРОВ, не скролла: плашки/секции ветра не дают, полёт — даёт
