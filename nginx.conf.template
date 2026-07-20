@@ -10,7 +10,7 @@ server {
     gzip_types text/css application/javascript text/plain image/svg+xml;
 
     # кадры/аудио/текстуры неизменяемы — пусть браузер кэширует надолго
-    location ~* \.(webp|mp3|jpg|js)$ {
+    location ~* \.(webp|mp3|mp4|jpg|js)$ {
         add_header Cache-Control "public, max-age=2592000, immutable";
     }
 

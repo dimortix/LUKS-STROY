@@ -109,6 +109,13 @@
   #film {
     position: absolute; inset: 0;
     width: 100%; height: 100%; display: block;
+    background: var(--paper);
+  }
+  /* видео-декодер: скрыт за canvas, но в потоке — иначе iOS не декодирует кадры */
+  #filmv {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0; pointer-events: none; z-index: -1;
   }
   /* ---------- Hero: журнальный разворот ---------- */
   .hero {
@@ -471,6 +478,7 @@
 
 <div class="stage" id="stage">
   <div class="viewport tex" id="viewport">
+    <video id="filmv" muted playsinline preload="auto" aria-hidden="true"></video>
     <canvas id="film"></canvas>
     <div class="loadtag caps" id="loadtag">объект · 0%</div>
 
@@ -540,9 +548,9 @@
     <figure class="reveal" data-obj="0" role="button" tabindex="0"><div class="ph"><img src="objects/o1-main.webp" alt="Объект 01 — ЖК в Белгороде, НВФ из металлокассет" loading="lazy"></div><figcaption><span>объект 01</span><span>жк · белгород</span></figcaption></figure>
     <figure class="reveal" data-obj="1" role="button" tabindex="0"><div class="ph"><img src="objects/o2-main.webp" alt="Объект 02 — Центр молодёжных инициатив, Белгород, НВФ из керамогранита" loading="lazy"></div><figcaption><span>объект 02</span><span>цми · белгород</span></figcaption></figure>
     <figure class="reveal" data-obj="2" role="button" tabindex="0"><div class="ph"><img src="objects/o3-main.webp" alt="Объект 03 — Корочанская СОШ им. Д. К. Кромского, мокрый фасад" loading="lazy"></div><figcaption><span>объект 03</span><span>сош · короча</span></figcaption></figure>
-    <figure class="reveal" data-obj="3" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0230.webp" alt="Объект 04 — штукатурные работы на лесах" loading="lazy"></div><figcaption><span>объект 04</span><span>штукатурка</span></figcaption></figure>
-    <figure class="reveal" data-obj="4" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0285.webp" alt="Объект 05 — вентилируемый фасад" loading="lazy"></div><figcaption><span>объект 05</span><span>вентфасад</span></figcaption></figure>
-    <figure class="reveal" data-obj="5" role="button" tabindex="0"><div class="ph"><img src="frames/frame_0339.webp" alt="Объект 06 — навесной фасад, панели-кассеты" loading="lazy"></div><figcaption><span>объект 06</span><span>нвф · панели</span></figcaption></figure>
+    <figure class="reveal" data-obj="3" role="button" tabindex="0"><div class="ph"><img src="stills/frame_0230.webp" alt="Объект 04 — штукатурные работы на лесах" loading="lazy"></div><figcaption><span>объект 04</span><span>штукатурка</span></figcaption></figure>
+    <figure class="reveal" data-obj="4" role="button" tabindex="0"><div class="ph"><img src="stills/frame_0285.webp" alt="Объект 05 — вентилируемый фасад" loading="lazy"></div><figcaption><span>объект 05</span><span>вентфасад</span></figcaption></figure>
+    <figure class="reveal" data-obj="5" role="button" tabindex="0"><div class="ph"><img src="stills/frame_0339.webp" alt="Объект 06 — навесной фасад, панели-кассеты" loading="lazy"></div><figcaption><span>объект 06</span><span>нвф · панели</span></figcaption></figure>
   </div>
   <div class="foot reveal">
     <span>нажмите на объект, чтобы узнать подробности</span>
@@ -742,11 +750,11 @@ const OBJECTS = [
     meta: { 'Место': 'г. Белгород, ул. Студенческая, 17а', 'Работы': 'НВФ из керамогранита', 'Объём': '1 500 м²', 'Заказчик': 'Администрация г. Белгорода' } },
   { stage: 'корочанская сош им. д. к. кромского', photos: ['objects/o3-main.webp', 'objects/o3-1.webp', 'objects/o3-2.webp', 'objects/o3-3.webp', 'objects/o3-4.webp'],
     meta: { 'Место': 'г. Короча, ул. Пролетарская, 39', 'Работы': 'мокрый фасад, декоративная штукатурка', 'Объём': '5 400 м²', 'Заказчик': 'Администрация Белгородской области' } },
-  { stage: 'штукатурные работы',  frames: [185, 210, 230, 245, 255],
+  { stage: 'штукатурные работы',  photos: ['stills/frame_0185.webp', 'stills/frame_0210.webp', 'stills/frame_0230.webp', 'stills/frame_0245.webp', 'stills/frame_0255.webp'],
     meta: { 'Место': 'Московская область', 'Работы': 'мокрый фасад, армирование, декоративный слой', 'Объём': '12 500 м²', 'Заказчик': 'девелоперская компания' } },
-  { stage: 'вентилируемый фасад', frames: [258, 275, 295, 315, 339],
+  { stage: 'вентилируемый фасад', photos: ['stills/frame_0258.webp', 'stills/frame_0275.webp', 'stills/frame_0295.webp', 'stills/frame_0315.webp', 'stills/frame_0339.webp'],
     meta: { 'Место': 'г. Москва', 'Работы': 'утепление, мембраны, облицовка керамогранитом', 'Объём': '9 300 м²', 'Заказчик': 'генеральный подрядчик' } },
-  { stage: 'нвф · металлокассеты', frames: [270, 290, 310, 325, 339],
+  { stage: 'нвф · металлокассеты', photos: ['stills/frame_0270.webp', 'stills/frame_0290.webp', 'stills/frame_0310.webp', 'stills/frame_0325.webp', 'stills/frame_0339.webp'],
     meta: { 'Место': 'г. Белгород', 'Работы': 'навесной вентилируемый фасад, металлокассеты', 'Объём': '5 700 м²', 'Заказчик': 'промышленное предприятие' } }
 ];
 
@@ -755,9 +763,8 @@ document.querySelectorAll('[data-obj]').forEach(fig => {
     const o = OBJECTS[+fig.dataset.obj];
     document.getElementById('objNum').textContent = 'Объект 0' + (+fig.dataset.obj + 1);
     document.getElementById('objTitle').textContent = o.stage;
-    const srcs = o.photos || o.frames.map(f => `${FRAME_DIR}/frame_${String(f).padStart(4, '0')}.webp`);
     document.getElementById('objGrid').innerHTML =
-      srcs.map(s => `<img src="${s}" alt="Фото объекта" loading="lazy">`).join('');
+      o.photos.map(s => `<img src="${s}" alt="Фото объекта" loading="lazy">`).join('');
     document.getElementById('objMeta').innerHTML =
       Object.entries(o.meta).map(([k, v]) => `<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
     openModal(document.getElementById('objModal'));
@@ -773,105 +780,84 @@ gsap.ticker.add(t => lenis.raf(t * 1000));
 gsap.ticker.lagSmoothing(0);
 lenis.stop(); // скролл заблокирован, пока грузится архив кадров
 
+// Заставка — ОДНО видео (film.mp4) для десктопа и телефонов, закодированное
+// «все кадры ключевые» (-g 1): любую позицию браузер декодирует мгновенно,
+// без прелоада сотен картинок и без давления на память.
 const FRAME_COUNT = 339;
-// на телефонах — облегчённый набор кадров 1280×720: быстрее грузится и не душит память
-const MOBILE = matchMedia('(max-width: 820px)').matches;
-const FRAME_DIR = MOBILE ? 'frames-m' : 'frames';
-const framePath = i => `${FRAME_DIR}/frame_${String(i + 1).padStart(4, '0')}.webp`;
-
-const canvas = document.getElementById('film');
-const ctx = canvas.getContext('2d');
-const images = [];
+const FPS = 30;
+const film = document.getElementById('film');   // canvas — то, что видно
+const ctx = film.getContext('2d');
+const vid = document.getElementById('filmv');    // video — только декодер, скрыт
 const seq = { frame: 0 };
 
-// Мобильные держат кадры СЖАТЫМИ (blob), декодируя окно вокруг текущего кадра:
-// все 339 декодированных кадров iOS не вывозит — вытесняет из памяти, канвас белеет.
-const USE_BITMAPS = MOBILE && 'createImageBitmap' in window;
-const blobs = [];
-const bitmaps = new Map();
-const lru = [];
-let decodingIdx = -1;
-
 function resize() {
-  const dpr = Math.min(window.devicePixelRatio || 1, MOBILE ? 1.5 : 2);
-  // канвас крупнее исходных кадров смысла не имеет — лишние пиксели только тормозят отрисовку
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // канвас крупнее исходника смысла не имеет — лишние пиксели только тормозят
   const cap = Math.min(1, 1920 / (innerWidth * dpr), 1080 / (innerHeight * dpr));
-  canvas.width = Math.round(innerWidth * dpr * cap);
-  canvas.height = Math.round(innerHeight * dpr * cap);
-  render();
+  film.width = Math.round(innerWidth * dpr * cap);
+  film.height = Math.round(innerHeight * dpr * cap);
+  draw();
 }
 
-function drawCover(img) {
-  const cw = canvas.width, ch = canvas.height;
-  const ir = img.width / img.height, cr = cw / ch;
+// рисуем текущий кадр видео на canvas по правилу cover (заполнить, обрезав лишнее)
+function draw() {
+  if (!vid.videoWidth) return;
+  const cw = film.width, ch = film.height;
+  const ir = vid.videoWidth / vid.videoHeight, cr = cw / ch;
   let dw, dh;
   if (cr > ir) { dw = cw; dh = cw / ir; } else { dh = ch; dw = ch * ir; }
-  ctx.clearRect(0, 0, cw, ch);
-  ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+  ctx.drawImage(vid, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
 }
 
-function ensureBitmap(i) {
-  if (bitmaps.has(i) || decodingIdx === i || !blobs[i]) return;
-  decodingIdx = i;
-  createImageBitmap(blobs[i]).then(bmp => {
-    bitmaps.set(i, bmp);
-    lru.push(i);
-    if (lru.length > 24) {
-      const old = lru.shift();
-      const ob = bitmaps.get(old);
-      if (ob && old !== i) { ob.close && ob.close(); bitmaps.delete(old); }
-    }
-    decodingIdx = -1;
-    if (Math.round(seq.frame) === i) render();
-  }).catch(() => { decodingIdx = -1; });
+// перемотка скроллом: seek декодера, кадр рисуем на canvas по завершении seek;
+// промежуточные позиции схлопываются в последнюю — очередь не копится, лагов нет
+let seekBusy = false, seekNext = null, seekTimer = 0;
+function afterSeek() {
+  clearTimeout(seekTimer);
+  draw();
+  seekBusy = false;
+  if (seekNext !== null) { const t = seekNext; seekNext = null; seekTo(t); }
 }
+function seekTo(t) {
+  if (isNaN(t)) return;
+  // уже на этом кадре — просто перерисуем (currentTime не сменится → 'seeked' не выстрелит)
+  if (Math.abs(t - vid.currentTime) < 1e-3) { draw(); return; }
+  if (seekBusy) { seekNext = t; return; }
+  seekBusy = true;
+  clearTimeout(seekTimer);
+  seekTimer = setTimeout(afterSeek, 250); // страховка, если 'seeked' не пришёл
+  vid.currentTime = t;
+}
+vid.addEventListener('seeked', afterSeek);
 
 function render() {
-  const i = Math.round(seq.frame);
-  if (USE_BITMAPS) {
-    let bmp = bitmaps.get(i);
-    if (!bmp) {
-      ensureBitmap(i);
-      let best = -1, bd = Infinity;
-      for (const k of bitmaps.keys()) {
-        const d = Math.abs(k - i);
-        if (d < bd) { bd = d; best = k; }
-      }
-      if (best < 0) return;
-      bmp = bitmaps.get(best);
-    }
-    drawCover(bmp);
-    return;
-  }
-  const img = images[i];
-  if (!img || !img.complete) return;
-  drawCover(img);
+  const i = Math.max(0, Math.min(FRAME_COUNT - 1, Math.round(seq.frame)));
+  seekTo(i / FPS);
 }
 
 function preload() {
   const tag = document.getElementById('loadtag');
-  let loaded = 0;
-  const tick = i => {
-    loaded++;
-    if (i === 0) resize(); // кадр 0 появляется в окне сразу, не дожидаясь остальных
-    tag.textContent = 'объект · ' + Math.round(loaded / FRAME_COUNT * 100) + '%';
-  };
-  if (USE_BITMAPS) {
-    return Promise.all(Array.from({ length: FRAME_COUNT }, (_, i) =>
-      fetch(framePath(i)).then(r => r.blob()).then(b => {
-        blobs[i] = b;
-        if (i === 0) return createImageBitmap(b).then(bmp => { bitmaps.set(0, bmp); lru.push(0); tick(i); });
-        tick(i);
-      }).catch(() => tick(i))
-    ));
-  }
-  return Promise.all(Array.from({ length: FRAME_COUNT }, (_, i) => {
-    const img = new Image();
-    img.src = framePath(i);
-    images[i] = img;
-    // decode() = загрузка + декодирование за один проход, без второй волны прогрева
-    return img.decode().catch(() => {}).then(() => tick(i));
-  }));
+  return fetch('film.mp4').then(async r => {
+    if (!r.ok) throw new Error('film.mp4: ' + r.status);
+    const total = +r.headers.get('Content-Length') || 0;
+    const reader = r.body.getReader();
+    const chunks = [];
+    let got = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      got += value.length;
+      if (total) tag.textContent = 'объект · ' + Math.round(got / total * 100) + '%';
+    }
+    vid.src = URL.createObjectURL(new Blob(chunks, { type: 'video/mp4' }));
+    // ждём готовности первого кадра, затем рисуем его на canvas
+    await new Promise((res, rej) => {
+      vid.addEventListener('loadeddata', res, { once: true });
+      vid.addEventListener('error', () => rej(new Error('video decode failed')), { once: true });
+    });
+    resize(); // рисует кадр 0 — окно больше не белое
+  });
 }
 
 // ---------- Звук: эмбиент сцен + ветер от скорости скролла ----------
@@ -958,9 +944,10 @@ gsap.ticker.add((t, dt) => {
 // стартовое положение видео: общий план, чуть опущен под верхнюю панель
 gsap.set('#film', { yPercent: 5 });
 
-preload().then(() => {
+function start() {
   resize();
   window.addEventListener('resize', resize);
+  render();
   scrollReady = true;
   if (!document.querySelector('.modal.open')) lenis.start();
 
@@ -981,7 +968,8 @@ preload().then(() => {
   });
 
   // Структура: разворот раскрывается → полёт → СТОП-КАДР (текст) → полёт → … → финал.
-  // Стыки роликов: кадры 96 и 217 (там конец ролика А == начало ролика Б).
+  // Четыре ролика (экскаватор → кран → рабочий → дом); стыки на кадрах 85/170/255
+  // спрятаны в стоп-кадрах, где скролл замирает и подписи закрывают склейку.
 
   // разворот: кадр стоит неподвижно, разъезжаются только бумажные полосы
   tl.to('#pTop', { yPercent: -101, duration: .05, ease: 'power1.in' }, .008);
@@ -1020,7 +1008,10 @@ preload().then(() => {
       scrollTrigger: { trigger: el, start: 'top 88%' }
     });
   });
-});
+}
+
+// видео не загрузилось — не морозим страницу: разблокируем скролл и показываем контент
+preload().then(start).catch(err => { console.warn('film.mp4 не загрузился:', err); start(); });
 </script>
 </body>
 </html>
