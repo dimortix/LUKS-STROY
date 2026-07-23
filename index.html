@@ -439,17 +439,23 @@
   @media (max-width: 720px) {
     /* производительность: без hover-анимаций на телефонах */
     .archive figure { transition: none; }
-    header { padding: 16px; }
+    header { padding: 16px; align-items: flex-start; gap: 10px; }
     header .chip { font-size: 8px; letter-spacing: .2em; }
-    .ppanel.top { height: max(13vh, 104px); padding: 8px 5vw 0; }
+    .ppanel.top { height: auto; min-height: 94px; padding: 10px 5vw 0; }
+    .ppanel.top .row { flex-direction: column; align-items: flex-start; gap: 8px; }
     .ppanel.top .mid { display: none; }
-    .ppanel.bot { height: max(22vh, 150px); padding: 20px 5vw 0; }
+    .ppanel.top .right { text-align: left; }
+    .ppanel.top .right .caps { text-align: left; }
+    .ppanel.bot { height: auto; min-height: auto; padding: 18px 5vw 22px; }
     .ppanel.bot .cols { grid-template-columns: 1fr; gap: 18px; }
     .ppanel.bot .right { display: none; }
-    .ppanel.bot h1 { font-size: clamp(34px, 10vw, 64px); }
-    .cap { left: 16px !important; right: 16px !important; bottom: 9vh !important; max-width: none; }
+    .ppanel.bot h1 { font-size: clamp(32px, 11vw, 56px); white-space: normal; line-height: .95; overflow-wrap: anywhere; }
+    .cap { left: 16px !important; right: 16px !important; bottom: 9vh !important; max-width: none; padding: 22px 20px 20px; }
+    .cap h2 { font-size: clamp(24px, 8vw, 34px); margin: 14px 0 12px; }
+    .cap p { font-size: 14px; }
     .archive { padding: 90px 6vw 68px; }
     .archive .grid { grid-template-columns: 1fr 1fr; gap: 28px 18px; }
+    .archive figcaption { flex-direction: column; gap: 6px; }
     .facts { padding: 68px 6vw; }
     .facts .grid { grid-template-columns: 1fr 1fr; }
     .facts .cell + .cell { border-left: none; padding-left: 0; }
@@ -469,6 +475,25 @@
     .sndbox { left: 16px; }
     .outro { padding: 68px 6vw 50px; }
     .outro .cols { grid-template-columns: 1fr; gap: 44px; }
+    .outro .founder { text-align: left; }
+    .outro .right p { max-width: none; }
+  }
+
+  @media (max-width: 560px) {
+    .ppanel.top { min-height: 86px; padding: 8px 5vw 0; }
+    .ppanel.bot { padding: 14px 5vw 18px; }
+    .ppanel.bot h1 { font-size: clamp(28px, 12vw, 40px); }
+    .cap { bottom: 7vh !important; padding: 18px 16px 16px; }
+    .archive { padding: 80px 5vw 56px; }
+    .archive .grid { grid-template-columns: 1fr; gap: 20px; }
+    .facts { padding: 60px 5vw; }
+    .facts .grid, .facts.dirs .grid { grid-template-columns: 1fr; }
+    .facts .cell, .facts .cell:nth-child(even), .facts .cell + .cell {
+      border-left: none; padding: 18px 0 20px;
+    }
+    .outro { padding: 60px 5vw 44px; }
+    .modal-box { padding: 32px 20px 28px; margin: 12px; }
+    .modal-close { right: 20px; top: 12px; }
   }
 </style>
 </head>
@@ -691,7 +716,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ===== ТЕЛЕФОН КОМПАНИИ: заменить в одном месте — подставится везде =====
-const PHONE = '+7 (905) 173-48-48';
+const PHONE = '+7 (000) 000-00-00';
 const PHONE_TEL = 'tel:' + PHONE.replace(/[^\d+]/g, '');
 document.querySelectorAll('[data-phone]').forEach(el => el.textContent = PHONE);
 document.querySelectorAll('[data-phone-link]').forEach(el => el.href = PHONE_TEL);
