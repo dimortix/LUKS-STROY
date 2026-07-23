@@ -548,12 +548,12 @@
     <div class="num">01 — Объекты</div>
   </div>
   <div class="grid">
-    <figure class="reveal" data-obj="0" role="button" tabindex="0"><div class="ph"><img src="objects/o1-main.webp" alt="Объект 01 — ЖК в Белгороде, НВФ из металлокассет" loading="lazy"></div><figcaption><span>объект 01</span><span>жк · белгород</span></figcaption></figure>
-    <figure class="reveal" data-obj="1" role="button" tabindex="0"><div class="ph"><img src="objects/o2-main.webp" alt="Объект 02 — Центр молодёжных инициатив, Белгород, НВФ из керамогранита" loading="lazy"></div><figcaption><span>объект 02</span><span>цми · белгород</span></figcaption></figure>
-    <figure class="reveal" data-obj="2" role="button" tabindex="0"><div class="ph"><img src="objects/o3-main.webp" alt="Объект 03 — Корочанская СОШ им. Д. К. Кромского, мокрый фасад" loading="lazy"></div><figcaption><span>объект 03</span><span>сош · короча</span></figcaption></figure>
-    <figure class="reveal" data-obj="3" role="button" tabindex="0"><div class="ph"><img src="stills/frame_0230.webp" alt="Объект 04 — штукатурные работы на лесах" loading="lazy"></div><figcaption><span>объект 04</span><span>штукатурка</span></figcaption></figure>
-    <figure class="reveal" data-obj="4" role="button" tabindex="0"><div class="ph"><img src="stills/frame_0285.webp" alt="Объект 05 — вентилируемый фасад" loading="lazy"></div><figcaption><span>объект 05</span><span>вентфасад</span></figcaption></figure>
-    <figure class="reveal" data-obj="5" role="button" tabindex="0"><div class="ph"><img src="stills/frame_0339.webp" alt="Объект 06 — навесной фасад, панели-кассеты" loading="lazy"></div><figcaption><span>объект 06</span><span>нвф · панели</span></figcaption></figure>
+    <figure class="reveal" data-obj="0" data-card-num="01" role="button" tabindex="0"><div class="ph"><img src="объекты/telegram-cloud-photo-size-2-5404323779552420154-y.jpg" alt="Объект 01 — Маслоперерабатывающий завод" loading="lazy"></div><figcaption><span>объект 01</span><span>Маслоперерабатывающий завод</span></figcaption></figure>
+    <figure class="reveal" data-obj="1" data-card-num="02" role="button" tabindex="0"><div class="ph"><img src="объекты/telegram-cloud-photo-size-2-5404323779552420179-y.jpg" alt="Объект 02 — ДЮСШ №45" loading="lazy"></div><figcaption><span>объект 02</span><span>ДЮСШ №45</span></figcaption></figure>
+    <figure class="reveal" data-obj="5" data-card-num="03" role="button" tabindex="0"><div class="ph"><img src="объекты/telegram-cloud-photo-size-2-5404323779552420308-y.jpg" alt="Объект 03 — Жилой комплекс" loading="lazy"></div><figcaption><span>объект 03</span><span>Жилой комплекс</span></figcaption></figure>
+    <figure class="reveal" data-obj="3" data-card-num="04" role="button" tabindex="0"><div class="ph"><img src="объекты/telegram-cloud-photo-size-2-5404323779552420284-y.jpg" alt="Объект 04 — Школа им. Д.К. Кромского" loading="lazy"></div><figcaption><span>объект 04</span><span>Школа им. Д.К. Кромского</span></figcaption></figure>
+    <figure class="reveal" data-obj="4" data-card-num="05" role="button" tabindex="0"><div class="ph"><img src="объекты/telegram-cloud-photo-size-2-5404323779552420302-y.jpg" alt="Объект 05 — ЦМИ" loading="lazy"></div><figcaption><span>объект 05</span><span>ЦМИ</span></figcaption></figure>
+    <figure class="reveal" data-obj="2" data-card-num="06" role="button" tabindex="0"><div class="ph"><img src="объекты/telegram-cloud-photo-size-2-5404323779552420216-y.jpg" alt="Объект 06 — Жилой дом" loading="lazy"></div><figcaption><span>объект 06</span><span>Жилой дом</span></figcaption></figure>
   </div>
   <div class="foot reveal">
     <span>нажмите на объект, чтобы узнать подробности</span>
@@ -691,7 +691,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // ===== ТЕЛЕФОН КОМПАНИИ: заменить в одном месте — подставится везде =====
-const PHONE = '+7 (000) 000-00-00';
+const PHONE = '+7 (905) 173-48-48';
 const PHONE_TEL = 'tel:' + PHONE.replace(/[^\d+]/g, '');
 document.querySelectorAll('[data-phone]').forEach(el => el.textContent = PHONE);
 document.querySelectorAll('[data-phone-link]').forEach(el => el.href = PHONE_TEL);
@@ -745,26 +745,27 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModals();
 });
 
-// ===== ДАННЫЕ ОБЪЕКТОВ: первые три — реальные объекты компании; последние три — заглушки на кадрах =====
+// ===== ДАННЫЕ ОБЪЕКТОВ: реальные фото по каждому объекту =====
 const OBJECTS = [
-  { stage: 'жилой комплекс', photos: ['objects/o1-main.webp', 'objects/o1-1.webp', 'objects/o1-2.webp', 'objects/o1-3.webp', 'objects/o1-4.webp'],
-    meta: { 'Место': 'г. Белгород, ул. Горького, 54в', 'Работы': 'НВФ из металлокассет для жилого комплекса', 'Объём': '5 000 м²', 'Заказчик': '«Сибпромстрой»' } },
-  { stage: 'центр молодёжных инициатив', photos: ['objects/o2-main.webp', 'objects/o2-1.webp', 'objects/o2-2.webp', 'objects/o2-3.webp'],
-    meta: { 'Место': 'г. Белгород, ул. Студенческая, 17а', 'Работы': 'НВФ из керамогранита', 'Объём': '1 500 м²', 'Заказчик': 'Администрация г. Белгорода' } },
-  { stage: 'корочанская сош им. д. к. кромского', photos: ['objects/o3-main.webp', 'objects/o3-1.webp', 'objects/o3-2.webp', 'objects/o3-3.webp', 'objects/o3-4.webp'],
-    meta: { 'Место': 'г. Короча, ул. Пролетарская, 39', 'Работы': 'мокрый фасад, декоративная штукатурка', 'Объём': '5 400 м²', 'Заказчик': 'Администрация Белгородской области' } },
-  { stage: 'штукатурные работы',  photos: ['stills/frame_0185.webp', 'stills/frame_0210.webp', 'stills/frame_0230.webp', 'stills/frame_0245.webp', 'stills/frame_0255.webp'],
-    meta: { 'Место': 'Московская область', 'Работы': 'мокрый фасад, армирование, декоративный слой', 'Объём': '12 500 м²', 'Заказчик': 'девелоперская компания' } },
-  { stage: 'вентилируемый фасад', photos: ['stills/frame_0258.webp', 'stills/frame_0275.webp', 'stills/frame_0295.webp', 'stills/frame_0315.webp', 'stills/frame_0339.webp'],
-    meta: { 'Место': 'г. Москва', 'Работы': 'утепление, мембраны, облицовка керамогранитом', 'Объём': '9 300 м²', 'Заказчик': 'генеральный подрядчик' } },
-  { stage: 'нвф · металлокассеты', photos: ['stills/frame_0270.webp', 'stills/frame_0290.webp', 'stills/frame_0310.webp', 'stills/frame_0325.webp', 'stills/frame_0339.webp'],
-    meta: { 'Место': 'г. Белгород', 'Работы': 'навесной вентилируемый фасад, металлокассеты', 'Объём': '5 700 м²', 'Заказчик': 'промышленное предприятие' } }
+  { stage: 'Маслоперерабатывающий завод', photos: ['объекты/telegram-cloud-photo-size-2-5404323779552420153-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420154-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420155-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420156-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420157-y.jpg'],
+    meta: { 'Место': 'с. Касторное, Курская обл.', 'Что': 'Маслоперерабатывающий завод', 'Заказчик': 'ОАО Курскагротерминал', 'Объём': '20 000 м²', 'Работы': 'Навесной фасад из профлиста' } },
+  { stage: 'ДЮСШ №45', photos: ['объекты/telegram-cloud-photo-size-2-5404323779552420179-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420180-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420181-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420182-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420183-y.jpg'],
+    meta: { 'Место': 'г. Белгород, ул. Проспект Славы, 69', 'Что': 'ДЮСШ №45', 'Заказчик': 'УКС Белгород', 'Объём': '2 300 м²', 'Работы': 'НВФ из металлокассет' } },
+  { stage: 'Жилой дом', photos: ['объекты/telegram-cloud-photo-size-2-5404323779552420216-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420217-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420218-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420219-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420220-y.jpg'],
+    meta: { 'Место': 'г. Белгород, ул. Бульвар Юности, 32', 'Что': 'Жилой дом', 'Заказчик': 'ИЖС Фонд социального развития', 'Объём': '1 500 м²', 'Работы': 'Короед' } },
+  { stage: 'Школа им. Д.К. Кромского', photos: ['объекты/telegram-cloud-photo-size-2-5404323779552420284-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420285-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420286-y copy.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420287-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420288-y.jpg'],
+    meta: { 'Место': 'г. Короча, ул. Пролетарская, 39', 'Что': 'Школа им. Д.К. Кромского', 'Заказчик': 'УКС по Белгородской области', 'Объём': '6 500 м²', 'Работы': 'Короед' } },
+  { stage: 'ЦМИ', photos: ['объекты/telegram-cloud-photo-size-2-5404323779552420302-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420303-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420304-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420305-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420306-y.jpg'],
+    meta: { 'Место': 'г. Белгород, ул. Студенческая, 17а', 'Что': 'ЦМИ', 'Заказчик': 'УКС по г. Белгород', 'Объём': '3 300 м²', 'Работы': 'НВФ из керамогранита' } },
+  { stage: 'Жилой комплекс', photos: ['объекты/telegram-cloud-photo-size-2-5404323779552420308-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420333-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420334-y.jpg', 'объекты/telegram-cloud-photo-size-2-5404323779552420335-y.jpg'],
+    meta: { 'Место': 'г. Белгород, ул. Горького, 52', 'Что': 'Жилой комплекс', 'Заказчик': 'ООО Современный дом', 'Объём': '5 400 м²', 'Работы': 'НВФ из металлокассет' } }
 ];
 
 document.querySelectorAll('[data-obj]').forEach(fig => {
   const open = () => {
     const o = OBJECTS[+fig.dataset.obj];
-    document.getElementById('objNum').textContent = 'Объект 0' + (+fig.dataset.obj + 1);
+    const cardNum = fig.dataset.cardNum || String(+fig.dataset.obj + 1).padStart(2, '0');
+    document.getElementById('objNum').textContent = 'Объект ' + cardNum;
     document.getElementById('objTitle').textContent = o.stage;
     document.getElementById('objGrid').innerHTML =
       o.photos.map(s => `<img src="${s}" alt="Фото объекта" loading="lazy">`).join('');
